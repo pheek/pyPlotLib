@@ -1,6 +1,8 @@
 # plotting_lib.py
+#
 # (c) 01_01_2026 philipp.freimann@bms-w.ch
 #    (with help of gemini.google.com)
+#    src: https://www.github.com/pheek/pyPlotLib
 # Das Schweizer Koordinatensystem hat Pfeile, die über das Gitter hinausragen,
 # was beim standard-Plott (mathplotilb/gnuplot/geogebra) nicht der Fall ist.
 #
@@ -22,6 +24,12 @@ import numpy as np
 from matplotlib.ticker import MultipleLocator, FuncFormatter
 from matplotlib.transforms import offset_copy
 
+##
+# Abgesehen vom Kreisdiagramm sollte immer ein Koordinatensystem
+# zugrunde liegen.
+# x_min, ... geben den Ausschnitt im kartesischen Koordinatensystem an.
+# show_y_axis sollte beim Boxplot auf False gesetzt werden.
+#
 
 def create_swiss_coordinate_system(x_min, x_max, y_min, y_max, show_y_axis=True):
     """
@@ -109,7 +117,13 @@ def create_swiss_coordinate_system(x_min, x_max, y_min, y_max, show_y_axis=True)
     return fig, ax
 
 
-
+##
+# Jedes Bild kann mit
+#  save_system(fig, "meinbild.png")
+# oder mit
+#  save_system(fig, "meinbild.svg") (oder .eps / .pdf)
+# gespeichert werden.
+# mit plt.show() wird es jeweils am Ende angezeigt.
 def save_system(fig, filename, dpi=300):
     """
     Speichert die Grafik in hoher Qualität.
@@ -122,7 +136,15 @@ def save_system(fig, filename, dpi=300):
     print(f"Grafik erfolgreich als {filename} gespeichert.")
 
 
-
+##
+# Zeichnen von Funktionen
+# Am einfachsten geht das mit lambda-Funktionen:
+# # draw_function_into_system(ax, lambda x: 0.5 * x**2 - 2, (-3.5, 3.5), label="Parabel", color='#33ddee')
+# ax     : Achse aus dem Koordinatensystem
+# func   : Die zu zeichnende Funktion
+# x_range: Definitionsbereich
+# label  : Beschriftung (optional)
+# color  : Farbe (optional)
 def draw_function_into_system(ax, func, x_range, label=None, color=None):
     """
     Zeichnet eine mathematische Funktion in das System ein.
@@ -134,7 +156,11 @@ def draw_function_into_system(ax, func, x_range, label=None, color=None):
     line, = ax.plot(x, y, linewidth=2, label=label, color=color)
     return line
 
-
+##
+# Ein Bar-Chart als "Säulendiagramm"
+# mit "set_custom_labels" können die Säulen einzeln beschriftet werden.
+# siehe folder /examples/
+#
 def draw_bar_chart(ax, x_values, y_values, label=None, color='#3498db', width=0.8):
     """
     Zeichnet ein Säulendiagramm in das bestehende System.
@@ -147,6 +173,9 @@ def draw_bar_chart(ax, x_values, y_values, label=None, color='#3498db', width=0.
     
     return bars
 
+##
+# Eigene Beschritfungen für draw_bar_chart()
+#
 def set_custom_labels(ax, x_values, labels):
     """
     Ersetzt die Zahlen an der x-Achse durch Text-Labels.
@@ -156,7 +185,9 @@ def set_custom_labels(ax, x_values, labels):
     ax.set_xticks(x_values)
     ax.set_xticklabels(labels, fontweight='bold', fontsize=12)
 
-    
+##
+# Ein Histogramm
+#
 def draw_histogram(ax, data, bin_width, start_value, label=None, color='#2ecc71'):
     """
     Zeichnet ein Histogramm mit fester Säulenbreite und definiertem Startwert.
@@ -175,35 +206,48 @@ def draw_histogram(ax, data, bin_width, start_value, label=None, color='#2ecc71'
     
     return n, bins
 
-
-def draw_boxplot(ax, data, y_position, height=0.6, label=None, color='#3498db'):
+##
+# Boxplot
+# 
+def draw_boxplot(ax, data, y_position, height=1.45, label=None, color='#3498db', axis_label=None):
     """
     Zeichnet einen horizontalen Boxplot in das System.
     data: Liste oder Array mit numerischen Werten.
     y_position: Die Höhe auf der y-Achse, auf welcher der Boxplot liegen soll.
     height: Die vertikale Ausdehnung der Box.
     """
+    # Hintergrundfarbe
+    fill_color = f"{color}4D" if color.startswith('#') else "#cccccccc"
     # patch_artist=True erlaubt das Füllen der Box mit Farbe
     # vert=False sorgt für die horizontale Ausrichtung
     # positions=[y_position] setzt den Boxplot auf die gewünschte Höhe
     bp = ax.boxplot(data, vert=False, positions=[y_position], widths=height,
                     patch_artist=True, manage_ticks=False,
-                    boxprops=dict(facecolor=color, color='black', linewidth=1.5),
-                    medianprops=dict(color='#e74c3c', linewidth=2.5), # Roter Median
-                    whiskerprops=dict(color='black', linewidth=1.5),
-                    capprops=dict(color='black', linewidth=1.5),
+                    boxprops=dict(facecolor=fill_color, color=color, linewidth=1.5),
+                    medianprops=dict(color=color, linewidth=2.5), # Roter Median
+                    whiskerprops=dict(color=color, linewidth=2.5),
+                    capprops=dict(color=color, linewidth=1.5),
                     zorder=4)
     
     # Optionales Label links neben den Boxplot setzen
     if label:
         ax.text(min(data) - 0.5, y_position, label, 
                 fontweight='bold', va='center', ha='right', fontsize=10)
+    # Achsen-Beschriftung
+    if axis_label:
+        # Wir platzieren den Text unter der X-Achse (y-Position leicht negativ)
+        # transform=ax.get_xaxis_transform() sorgt dafür, dass x in Daten-Koordinaten 
+        # und y in Achsen-Koordinaten (0 bis 1) gemessen wird.
+        ax.set_xlabel(axis_label, fontweight='bold', fontsize=12, labelpad=15)
         
     return bp
 
 
 # Unahbhängig vom Koordinatensystem:
 # mögliche modi: "none", "relativ", "absolute"
+# Wichtig: die "captions" und die "values" müssen gleich
+#          viele Anzahl Werte aufweisen.
+#
 def draw_pie_chart(captions, values, mode="none", title=None, colors=None):
     """
     Erstellt ein Kreisdiagramm und fängt den Rückgabewert-Fehler ab.
