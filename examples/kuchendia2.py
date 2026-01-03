@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from plotting_lib import draw_pie_chart, save_system
+from bms_graph_lib import draw_pie_chart, save_system
 import matplotlib.pyplot as plt
 
 # Daten definieren

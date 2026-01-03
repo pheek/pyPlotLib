@@ -2,7 +2,7 @@
 
 # Boxplot Beispiel
 
-from plotting_lib import create_swiss_coordinate_system, draw_boxplot,save_system
+from bms_graph_lib import create_swiss_coordinate_system, draw_boxplot,save_system
 import matplotlib.pyplot as plt
 
 # System erstellen (x-Achse für Noten oder Punkte, y-Achse als Stapelplatz)

@@ -1,4 +1,4 @@
-# plotting_lib.py
+# bms_graph_lib.py
 #
 # (c) 01_01_2026 philipp.freimann@bms-w.ch
 #    (with help of gemini.google.com)
@@ -19,10 +19,10 @@
 #   beim Boxplot macht die y-Achse keinen Sinn.
 #
 
-import matplotlib.pyplot as plt
-import numpy as np
-from matplotlib.ticker import MultipleLocator, FuncFormatter
-from matplotlib.transforms import offset_copy
+import matplotlib.pyplot     as     plt
+import numpy                 as     np
+from   matplotlib.ticker     import MultipleLocator, FuncFormatter
+from   matplotlib.transforms import offset_copy
 
 ##
 # Abgesehen vom Kreisdiagramm sollte immer ein Koordinatensystem

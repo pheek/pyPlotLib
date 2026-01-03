@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from plotting_lib import create_swiss_coordinate_system, draw_histogram,save_system
+from bms_graph_lib import create_swiss_coordinate_system, draw_histogram,save_system
 import matplotlib.pyplot as plt
 
 # 1. System erstellen (z.B. von 0 bis 10 auf beiden Achsen)

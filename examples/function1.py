@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from plotting_lib import create_swiss_coordinate_system, draw_function_into_system, save_system
+from bms_graph_lib import create_swiss_coordinate_system, draw_function_into_system, save_system
 import matplotlib.pyplot as plt
 
 

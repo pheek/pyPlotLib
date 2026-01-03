@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from plotting_lib import create_swiss_coordinate_system, draw_bar_chart, set_custom_labels,save_system
+from bms_graph_lib import create_swiss_coordinate_system, draw_bar_chart, set_custom_labels,save_system
 import matplotlib.pyplot as plt
 
 # 1. System erstellen (x von 0 bis 5, y von 0 bis 6)
