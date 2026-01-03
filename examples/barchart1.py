@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 # main.py
 from plotting_lib import create_swiss_coordinate_system, draw_bar_chart,save_system
 import matplotlib.pyplot as plt

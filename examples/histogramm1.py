@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from plotting_lib import create_swiss_coordinate_system, draw_histogram,save_system
 import matplotlib.pyplot as plt
 
@@ -16,6 +17,6 @@ ax.legend()
 
 # als eps oder png speichern  und anzeigen
 # oder wie hier: Alles aufs Mal:
-save_system(fig, "histogramm1.eps")
-save_system(fig, "histogramm1.png")
+#save_system(fig, "histogramm1.eps")
+#save_system(fig, "histogramm1.png")
 plt.show()

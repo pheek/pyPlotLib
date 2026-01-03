@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from plotting_lib import draw_pie_chart, save_system
 import matplotlib.pyplot as plt
 
