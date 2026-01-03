@@ -17,8 +17,9 @@ draw_bar_chart(ax, monate_x, werte_y, label="Verkäufe", color='#e67e22')
 
 ax.legend()
 
-save_system(fig, "barchart1.png")
-save_system(fig, "barchart1.eps")
+# anzeigen und (optional) speichen
+#save_system(fig, "barchart1.png")
+#save_system(fig, "barchart1.eps")
 
 plt.show()
 

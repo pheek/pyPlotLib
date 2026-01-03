@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 from plotting_lib import create_swiss_coordinate_system, draw_function_into_system, save_system
 import matplotlib.pyplot as plt
@@ -20,8 +19,8 @@ ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
 
 
-# speichern und anzeigen (optional)
-save_system(fig, "function2.png")
-save_system(fig, "function2.eps")
+# anzeigen und (optional) speichern
+#save_system(fig, "function2.png")
+#save_system(fig, "function2.eps")
 # und anzeigen (optional, aber von Vorteil)
 plt.show()
