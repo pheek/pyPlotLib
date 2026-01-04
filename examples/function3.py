@@ -1,14 +1,14 @@
 #!/usr/bin/python3
-from bms_graph_lib import create_swiss_coordinate_system, draw_function_into_system, save_system
-import matplotlib.pyplot as plt
+from bms_graph_lib       import create_swiss_coordinate_system, draw_function_into_system, save_system
+import matplotlib.pyplot as     plt
 
-# A. System erstellen (z.B. x -3 bis +4 und y von -4 bis +3)
+# A. System ellen (z.B. x -3 bis +4 und y von -4 bis +3)
 fig, ax = create_swiss_coordinate_system(-3, +4, -4, +3)
 
 def parabelInScheitelform(x):
 	return -0.5*(x-2)**2 + 1.5
 
-# B 1. Eine rote Parabel in Scheitelform
+# B 1. Eine Parabel in Scheitelform
 draw_function_into_system(ax, parabelInScheitelform, (-2, 3.5), label="Parabel", color='#ccddee')
 
 # B 2. Scheitelpunkt
