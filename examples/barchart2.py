@@ -24,5 +24,6 @@ ax.set_xticklabels(groessen, fontweight='bold', ha='right')
 
 ax.legend(["Verkäufe"])
 
-save_system(fig, "barchart2.png")
+## save (optional) and show
+#save_system(fig, "barchart2.png")
 plt.show()

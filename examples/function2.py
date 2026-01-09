@@ -1,11 +1,7 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
+
 from bms_graph_lib import bmsw_coordinate_system, draw_function_into_system, save_system
 import matplotlib.pyplot as plt
-=======
-from bms_graph_lib       import create_swiss_coordinate_system, draw_function_into_system, save_system
-import matplotlib.pyplot as     plt
->>>>>>> b293f6d8c71c5e4670115130aca274336463be30
 
 # A. System erstellen (z.B. -4 bis 4)
 fig, ax = bmsw_coordinate_system(-3, 4, -4, 3)

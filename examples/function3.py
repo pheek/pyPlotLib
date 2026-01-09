@@ -1,17 +1,10 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
+
 from bms_graph_lib import bmsw_coordinate_system, draw_function_into_system, save_system
 import matplotlib.pyplot as plt
 
 # A. System erstellen (z. B. x -3 bis +4 und y von -4 bis +3)
 fig, ax = bmsw_coordinate_system(-3, +4, -4, +3)
-=======
-from bms_graph_lib       import create_swiss_coordinate_system, draw_function_into_system, save_system
-import matplotlib.pyplot as     plt
-
-# A. System ellen (z.B. x -3 bis +4 und y von -4 bis +3)
-fig, ax = create_swiss_coordinate_system(-3, +4, -4, +3)
->>>>>>> b293f6d8c71c5e4670115130aca274336463be30
 
 def parabelInScheitelform(x):
 	return -0.5*(x - 2)**2 + 1.5
