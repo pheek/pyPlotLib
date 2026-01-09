@@ -2,8 +2,8 @@
 from bms_graph_lib import bmsw_coordinate_system, draw_bar_chart, set_custom_labels,save_system
 import matplotlib.pyplot as plt
 
-# 1. System erstellen (x von 0 bis 5, y von 0 bis 6)
-fig, ax = bmsw_coordinate_system(0, 6, 0, 6)
+# 1. System erstellen 
+fig, ax = bmsw_coordinate_system(0, 7, 0, 6)
 
 # 2. Daten definierensave_system(fig, "barchart1.png")
 

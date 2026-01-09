@@ -63,17 +63,17 @@ def bmsw_coordinate_system(x_min, x_max, y_min, y_max, show_y_axis=True):
     m_x = np.arange(x_min, x_max + 0.01, minor_step)
     m_y = np.arange(y_min, y_max + 0.01, minor_step)
     for x in m_x:
-        ax.plot([x, x], [y_min, y_max], color='#e0e0e0', linewidth=0.5, zorder=0)
+        ax.plot([x, x], [y_min, y_max], color='#d0d0f0', linewidth=0.5, zorder=0)
     for y in m_y:
-        ax.plot([x_min, x_max], [y, y], color='#e0e0e0', linewidth=0.5, zorder=0)
+        ax.plot([x_min, x_max], [y, y], color='#d0d0f0', linewidth=0.5, zorder=0)
 
     # Hauptgitter
     M_x = np.arange(x_min, x_max + 0.01, major_step)
     M_y = np.arange(y_min, y_max + 0.01, major_step)
     for x in M_x:
-        ax.plot([x, x], [y_min, y_max], color='#b0b0b0', linewidth=0.8, zorder=0)
+        ax.plot([x, x], [y_min, y_max], color='#9090c0', linewidth=0.8, zorder=0)
     for y in M_y:
-        ax.plot([x_min, x_max], [y, y], color='#b0b0b0', linewidth=0.8, zorder=0)
+        ax.plot([x_min, x_max], [y, y], color='#9090c0', linewidth=0.8, zorder=0)
 
     # 5. Ticks & Formatter (Zahlen)
     ax.xaxis.set_major_locator(MultipleLocator(major_step))

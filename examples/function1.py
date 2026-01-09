@@ -4,10 +4,9 @@ import matplotlib.pyplot as plt
 
 
 # A. System erstellen (z.B. -4 bis 4)
-fig, ax = bmsw_coordinate_system(-4, 4, -4, 4)
+fig, ax = bmsw_coordinate_system(-4, 4, -4, 5)
 
 # B. Zeichnen
-
 
 # 1. Eine hellblaue Parabel zeichnen: f(x) = 0.5 * x^2 - 2
 draw_function_into_system(ax, lambda x: 0.5 * x**2 - 2, (-3.5, 3.5), label="Parabel 1", color='#ccddee')
@@ -18,23 +17,22 @@ draw_function_into_system(ax, lambda x: -0.3 * x**2 + 2*x + 1, (-3.5, 3.5), labe
 draw_function_into_system(ax, lambda x: 0.3 * x - 1, (-3.5, 3.5), label="Gerade")
 
 
-# 2. Punkte und Texte
+# Punkte und Texte
 
-# 2. a) Einen Punkt manuell hinzufügen (Beispiel für spätere Erweiterungen)
+# Einen Punkt manuell hinzufügen (Beispiel für spätere Erweiterungen)
 ax.plot(2  , 3  , 'ro'   ) # Ein roter (r) Punkt (o) bei (2,3)
 ax.text(2.2, 2.9, 'P = (2|3)', color='red')
 
 
-# 2. b) weitere Punkt
+# weitere Punkt
 ax.plot(2  , -1  , marker='s'  , color='#883366') # s=square
 ax.text(2.2, -1.2, 'Q = (2|-1)', color='#883366')
 
-# 2. c) Ein grünes Kreuz bei (-3 | 2)
+# Ein grünes Kreuz bei (-3 | 2)
 ax.plot(-3, 2, 'gx')  # grünes Kreuz
 
 # 3. Legende anzeigen
 ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
-
 
 # C. speichen (optional) anzeigen
 #save_system(fig, "function1.png")

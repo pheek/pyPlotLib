@@ -3,8 +3,8 @@
 from bms_graph_lib import bmsw_coordinate_system, draw_function_into_system, save_system
 import matplotlib.pyplot as plt
 
-# A. System erstellen (z. B. x -3 bis +4 und y von -4 bis +3)
-fig, ax = bmsw_coordinate_system(-3, +4, -4, +3)
+# A. System erstellen 
+fig, ax = bmsw_coordinate_system(-3, +4, -4, +2)
 
 def parabelInScheitelform(x):
 	return -0.5*(x - 2)**2 + 1.5
