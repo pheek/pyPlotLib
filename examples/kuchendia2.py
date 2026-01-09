@@ -8,5 +8,7 @@ anzahl_probanden = [3, 8, 2, 16, 11, 5]
 
 # Diagramm zeichnen
 fig, ax = draw_pie_chart(geschmack, anzahl_probanden, mode="relativ", title="Geschmacksrichtung")
-save_system(fig, "kuchendia2.svg")
+
+## save (optional) and show
+#save_system(fig, "kuchendia2.svg")
 plt.show()

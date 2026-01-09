@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-from bms_graph_lib import create_swiss_coordinate_system, draw_histogram, save_system
+from bms_graph_lib import bmsw_coordinate_system, draw_histogram, save_system
 import matplotlib.pyplot as plt
 
-# 1. System erstellen (z.B. von 0 bis 10 auf beiden Achsen)
-fig, ax = create_swiss_coordinate_system(0, 10, 0, 8)
+# 1. System erstellen (z. B. von 0 bis 10 auf beiden Achsen)
+fig, ax = bmsw_coordinate_system(0, 10, 0, 8)
 
 # 2. Beispieldaten (Rohdaten)
 # Diese Daten werden vom Histogramm automatisch gezählt

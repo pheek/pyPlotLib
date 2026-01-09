@@ -25,13 +25,14 @@ from   matplotlib.ticker     import MultipleLocator, FuncFormatter
 from   matplotlib.transforms import offset_copy
 
 ##
+# bmsw Koordinatensystem
 # Abgesehen vom Kreisdiagramm sollte immer ein Koordinatensystem
 # zugrunde liegen.
 # x_min, ... geben den Ausschnitt im kartesischen Koordinatensystem an.
 # show_y_axis sollte beim Boxplot auf False gesetzt werden.
 #
 
-def create_swiss_coordinate_system(x_min, x_max, y_min, y_max, show_y_axis=True):
+def bmsw_coordinate_system(x_min, x_max, y_min, y_max, show_y_axis=True):
     """
     Erstellt ein Schweizer Koordinatensystem mit hierarchischem Gitter.
     show_y_axis=False blendet die y-Achse und deren Beschriftung für Boxplots aus.
