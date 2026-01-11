@@ -23,7 +23,7 @@ import matplotlib.pyplot     as     plt
 import numpy                 as     np
 from   matplotlib.ticker     import MultipleLocator, FuncFormatter
 from   matplotlib.transforms import offset_copy
-
+from   matplotlib.patches    import Polygon
 ##
 # bmsw Koordinatensystem
 # Abgesehen vom Kreisdiagramm sollte immer ein Koordinatensystem
@@ -157,6 +157,31 @@ def draw_function_into_system(ax, func, x_range, label=None, color=None):
     line, = ax.plot(x, y, linewidth=2, label=label, color=color)
     return line
 
+
+##
+# Draw Polygon
+def draw_polygon(ax, points, color='#e74c3c', label=None):
+    """
+    Zeichnet ein geschlossenes, gefülltes Polygon.
+    points: Liste von Koordinaten-Paaren, z. B. [[x1, y1], [x2, y2], ...]
+    color: Die Hauptfarbe für Rand und Fläche (Fläche erhält 20% Opazität)
+    """
+    # 20% Opazität für die Fläche (Hex '33')
+    fill_color = f"{color}33" if color.startswith('#') else color
+    
+    # Das Polygon-Objekt erstellen
+    # closed=True sorgt dafür, dass der letzte Punkt mit dem ersten verbunden wird
+    poly = Polygon(points, closed=True, 
+                   facecolor=fill_color, 
+                   edgecolor=color, 
+                   linewidth=2, 
+                   zorder=3,
+                   label=label)
+    
+    ax.add_patch(poly)
+    
+    return poly
+
 ##
 # Ein Bar-Chart als "Säulendiagramm"
 # mit "set_custom_labels" können die Säulen einzeln beschriftet werden.
@@ -179,8 +204,8 @@ def draw_bar_chart(ax, x_values, y_values, label=None, color='#3498db', width=0.
 def set_custom_labels(ax, x_values, labels):
     """
     Ersetzt die Zahlen an der x-Achse durch Text-Labels.
-    x_values: Die Positionen (z.B. [1, 2, 3])
-    labels: Die Texte (z.B. ['S', 'M', 'L'])
+    x_values: Die Positionen (z. B. [1, 2, 3])
+    labels: Die Texte (z. B. ['S', 'M', 'L'])
     """
     ax.set_xticks(x_values)
     ax.set_xticklabels(labels, fontweight='bold', fontsize=12)
@@ -191,8 +216,8 @@ def set_custom_labels(ax, x_values, labels):
 def draw_histogram(ax, data, bin_width, start_value, label=None, color='#2ecc71'):
     """
     Zeichnet ein Histogramm mit fester Säulenbreite und definiertem Startwert.
-    data: Die Liste der Rohdaten (z.B. [1.2, 1.5, 2.3, 2.7, ...])
-    bin_width: Breite einer Säule (z.B. 1.0)
+    data: Die Liste der Rohdaten (z. B. [1.2, 1.5, 2.3, 2.7, ...])
+    bin_width: Breite einer Säule (z. B. 1.0)
     start_value: Wo die erste Säule beginnen soll
     """
     # Berechne die Klassengrenzen (Bins) basierend auf den Daten
