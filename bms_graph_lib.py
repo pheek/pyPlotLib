@@ -170,8 +170,7 @@ def draw_bar_chart(ax, x_values, y_values, label=None, color='#3498db', width=0.
     # align='edge' setzt die linke Kante der Säule auf den x-Wert. 
     # align='center' (Standard) setzt die Mitte der Säule auf den x-Wert.
     bars = ax.bar(x_values, y_values, width=width, color=color, 
-                  label=label, edgecolor='black', linewidth=1, zorder=3)
-    
+                  label=label, edgecolor='black', linewidth=1, zorder=3)    
     return bars
 
 ##
