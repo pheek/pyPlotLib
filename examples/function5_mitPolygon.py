@@ -13,17 +13,22 @@ def wurzelFunktion(x):
 draw_function_into_system(ax, wurzelFunktion, (0, 3.5), label="Parabel", color='#ccddee')
 
 # B Polygon
-# B 1. Punkte definieren (z.B. ein Parallelogramm)
+#   Punkte definieren (z.B. ein Parallelogramm)
 xx = 3.5
 dreieck_punkte = [[0,0], [xx, 0], [xx, wurzelFunktion(xx)]]
 
-# C 2. Zeichnen
+# C Zeichnen
 draw_polygon(ax, dreieck_punkte, color='#8e44ff', label="Fläche A")
 
-# D 3. Legende anzeigen
+# D Eckpunkte Beschriften
+labels = ["", "B", "C"]
+for i, p in enumerate(dreieck_punkte):
+    ax.text(p[0] + 0.1, p[1] + 0.05, labels[i], fontweight='bold', ha='center')
+
+# E Legende anzeigen
 ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
-# E anzeigen und (optional) speichern
+# F anzeigen und (optional) speichern
 #save_system(fig, "function4.png")
 #ave_system(fig, "function4.eps")
 # und anzeigen (optional, aber von Vorteil)
