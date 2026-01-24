@@ -6,19 +6,18 @@ from bmsw_graph_lib import b
 b.bmsw_coordinate_system(-6, 12, -5, 6)
 
 # B. Zeichnen
-
+# dots definieren (python array of dots)
 dots = []
 
 # 1. y=2/3 x + 2
 b.draw_function_into_system(lambda x: 2/3*x+2, (-5.5, 5.5), color="#ff0000")
 # Punkte
-dots.extend([[0,2],[3,4]])
+dots.extend([[0,2],[3,4]]) # füge der leeren Liste zwei Punkte hinzu
 
 # 2. y=-0.4 x + 3
 b.draw_function_into_system(lambda x: -0.4*x+3, (-5.5, 11.5), color="#008800")
 # Punkte
-dots.extend([[-5,5],[0,3],[5,1],[10,-1]])
-
+dots.extend([[-5,5],[0,3],[5,1],[10,-1]]) # füge weitere Punkte hinzu
 
 # 3. y=-1/3x + 5
 b.draw_function_into_system(lambda x: -0.3333*x+5, (-3, 11.5), color="#0000cc")
@@ -51,9 +50,8 @@ b.draw_function_into_system(lambda x: -x/5*3, (-5.5, 7.5), color="#ff00cc")
 dots.extend([ [-5,3], [5,-3]])
 
 
-# 
+# draw all dots 
 for dot in dots:
-	#print(dot)
 	b.dot(dot[0], dot[1], 'ko')
 	
 #optional speichern
