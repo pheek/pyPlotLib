@@ -6,7 +6,7 @@ from bmsw_graph_lib import b
 b.bmsw_coordinate_system(-1, +4, -1, +3)
 
 def wurzelFunktion(x):
-	return 1.5 * x**0.5 # wurzel
+	return 1.5 * b.sqrt(x)
 
 # B 1. Eine Parabel in Scheitelform
 b.draw_function_into_system(wurzelFunktion, (0, 3.5), label="Parabel", color='#ccddee')
@@ -28,7 +28,7 @@ for i, p in enumerate(dreieck_punkte):
 b.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
 # F anzeigen und (optional) speichern
-#b.save_system("function4.png")
-#b.save_system("function4.eps")
+#b.save_system("function5.png")
+#b.save_system("function5.eps")
 # und anzeigen (optional, aber von Vorteil)
 b.show()

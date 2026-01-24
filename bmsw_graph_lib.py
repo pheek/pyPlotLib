@@ -26,6 +26,7 @@ import numpy                 as     np
 from   matplotlib.ticker     import MultipleLocator, FuncFormatter
 from   matplotlib.transforms import offset_copy
 from   matplotlib.patches    import Polygon
+import math
 
 ##
 # class BmsGraphLib
@@ -380,6 +381,9 @@ class BmswGraphLib:
 	## show all
 	def show(self):
 		plt.show()
+
+	def sqrt(self, x):
+		return x**0.5
 # end class BmswGrapLib
 
 ## create a single instance
@@ -393,7 +397,7 @@ def demo():
 	b.bmsw_coordinate_system(-2.5, 2.5, -4, 3.5)
 	b.draw_function_into_system(lambda x: -0.3 * x**2 + 2*x + 1, (-2, 1.5), label="Parabel 2", color='#ff0000')
 	b.show()
-	b.save_system("demo.png")
+#	b.save_system("demo.png")# optional
 
 ## start Main_ bmsw_graph_lib.py
 # shows a little demo
