@@ -1,14 +1,13 @@
 #!/usr/bin/python3
-from bms_graph_lib import draw_pie_chart, save_system
-import matplotlib.pyplot as plt
+from bmsw_graph_lib import b
 
 # Daten definieren
 lieblingsfach = ["Französisch", "Mathematik", "Englisch", "Turnen", "Pause"]
-anz_sbs       = [3, 8, 2, 9, 16]
+anz_sbs       = [3, 8, 2, 9, 16] #sbs = Schülerinnen bzw. Schülerers
 
 # Diagramm zeichnen
-fig, ax = draw_pie_chart(lieblingsfach, anz_sbs, mode="none", title="Lieblingsfach")
+b.draw_pie_chart(lieblingsfach, anz_sbs, mode="none", title="Lieblingsfach")
 
 ## show and (optional) save
-#save_system(fig, "kuchendia3.png")
-plt.show()
+#b.save_system("kuchendia3.png")
+b.show()

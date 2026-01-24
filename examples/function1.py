@@ -1,42 +1,27 @@
 #!/usr/bin/python3
-from bms_graph_lib import bmsw_coordinate_system, draw_function_into_system, save_system
-import matplotlib.pyplot as plt
 
+from bmsw_graph_lib import b
 
 # A. System erstellen (z.B. -4 bis 4)
-fig, ax = bmsw_coordinate_system(-4, 4, -4, 5)
+b.bmsw_coordinate_system(-1, 4, -4, 2)
 
-# B. Zeichnen
+# Funktion definieren
+def f(x):	return -0.5*(x-2)**2 + 1.5
 
-# 1. Eine hellblaue Parabel zeichnen: f(x) = 0.5 * x^2 - 2
-draw_function_into_system(ax, lambda x: 0.5 * x**2 - 2, (-3.5, 3.5), label="Parabel 1", color='#ccddee')
+# 1. Eine Parabel in Scheitelform
+b.draw_function_into_system(f, (-1, 3.5), label="Parabel", color='#ccddee')
 
-draw_function_into_system(ax, lambda x: -0.3 * x**2 + 2*x + 1, (-3.5, 3.5), label="Parabel 2", color='#ff0000')
-
-# 2. Eine Gerade zeichnen: f(x) = x + 1
-draw_function_into_system(ax, lambda x: 0.3 * x - 1, (-3.5, 3.5), label="Gerade")
-
-
-# Punkte und Texte
-
-# Einen Punkt manuell hinzufügen (Beispiel für spätere Erweiterungen)
-ax.plot(2  , 3  , 'ro'   ) # Ein roter (r) Punkt (o) bei (2,3)
-ax.text(2.2, 2.9, 'P = (2|3)', color='red')
-
-
-# weitere Punkt
-ax.plot(2  , -1  , marker='s'  , color='#883366') # s=square
-ax.text(2.2, -1.2, 'Q = (2|-1)', color='#883366')
-
-# Ein grünes Kreuz bei (-3 | 2)
-ax.plot(-3, 2, 'gx')  # grünes Kreuz
+# 2. Scheitelpunkt und Text
+b.dot(2, 1.5, 'bo') # Ein blauer (b) Punkt (o) bei (2, 1.5)
+b.text(1.5, 1.7, 'S=(2.2|1.6)',color='#0000bb')
 
 # 3. Legende anzeigen
-ax.legend(loc='upper left', bbox_to_anchor=(1, 1))
+b.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
-# C. speichen (optional) anzeigen
-#save_system(fig, "function1.png")
-#save_system(fig, "function1.eps")
-#save_system(fig, "function1.svg")
-#save_system(fig, "function1.pdf")
-plt.show()
+# anzeigen und (optional) speichern
+#b.save_system("function1.png")
+#b.save_system("function1.eps")
+#b.save_system("function1.pdf")
+#b.save_sysetm("function1.jpg")
+# und anzeigen (optional, aber von Vorteil)
+b.show()
