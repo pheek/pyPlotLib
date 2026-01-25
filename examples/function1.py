@@ -3,7 +3,7 @@
 from bmsw_graph_lib import b
 
 # optional: Font-Size vergrößern
-#b.set_fontsize(30)
+b.set_fontsize(20)
 
 # A. System erstellen (z.B. -4 bis 4)
 b.bmsw_coordinate_system(-1, 4, -4, 2)
@@ -19,7 +19,7 @@ b.dot(2, 1.5, 'bo') # Ein blauer (b) Punkt (o) bei (2, 1.5)
 b.text(1.5, 1.7, 'S=(2.2|1.6)',color='#0000bb')
 
 # 3. Legende anzeigen
-b.legend(loc='upper left', bbox_to_anchor=(1, 1))
+b.legend(loc='lower center')
 
 # anzeigen und (optional) speichern
 #b.save_system("png")

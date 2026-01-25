@@ -335,6 +335,21 @@ class BmswGraphLib:
 	# loc = "lower center"
 	# loc = "center"
 	def legend(self, *args, **hargs):
+		"""
+		Zeigt die Legende an und nutzt automatisch die globale base_fontsize.
+		"""
+		# Debug-Print: Wenn der nicht kommt, wird die Methode nicht aufgerufen!
+		print(f"DEBUG: Legend Methode der Klasse aufgerufen mit Size {self.base_fontsize}")
+
+		if 'fontsize' not in hargs:
+			hargs['fontsize'] = self.base_fontsize
+
+		if 'prop' not in hargs:
+			hargs['prop'] = {'size': self.base_fontsize}
+		elif 'size' not in hargs['prop']:
+			hargs['prop']['size'] = self.base_fontsize
+
+		self.ax.legend(*args, **hargs)
 		self.ax.legend(*args, **hargs)
 
 
