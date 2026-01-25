@@ -14,6 +14,6 @@ b.draw_histogram(messwerte, bin_width=2, start_value=0, label="Häufigkeit", col
 
 # als eps oder png speichern  und anzeigen
 # oder wie hier: Alles aufs Mal:
-#b.save_system("histogramm1.eps")
-#b.save_system("histogramm1.png")
+#b.save_system("eps")
+#b.save_system("png")
 b.show()

@@ -17,3 +17,6 @@
    Beim Boxplot beachten, dass "show_y_axis=False" gesetzt werden muss, denn   
    beim Boxplot macht die y-Achse keinen Sinn.                                 
           
+Funktionen
+==========
+![Beispile Funktion](https://github.com/pheek/pyPoltLib/examples/img/funktion.png)

@@ -13,5 +13,5 @@ daten_klasse = [3, 5, 6, 7, 8, 8, 9, 10, 12, 14]
 b.draw_boxplot(daten_klasse, y_position=2, label="Klasse", color='#3498db', axis_label="Noten")
 
 # optional save
-#b.save_system("boxplot1.png")
+#b.save_system("png")
 b.show()

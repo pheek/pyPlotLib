@@ -16,8 +16,8 @@ b.draw_bar_chart(monate_x, werte_y, label="Verkäufe", color='#fabc22')
 b.legend()
 
 # anzeigen und (optional) speichen
-#b.save_system("barchart1.png")
-#b.save_system("barchart1.eps")
+#b.save_system("png")
+#b.save_system("eps")
 
 b.show()
 

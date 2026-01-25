@@ -15,5 +15,5 @@ b.draw_histogram(messwerte, bin_width=5, start_value=0, label="Häufigkeit", col
 b.legend()
 
 # save (optional) and show
-#b.save_system("histogramm2.png")
+#b.save_system("png")
 b.show()

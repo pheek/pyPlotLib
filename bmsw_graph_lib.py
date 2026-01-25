@@ -21,12 +21,18 @@
 #   beim Boxplot macht die y-Achse keinen Sinn.
 #
 
+
 import matplotlib.pyplot     as     plt
 import numpy                 as     np
 from   matplotlib.ticker     import MultipleLocator, FuncFormatter
 from   matplotlib.transforms import offset_copy
 from   matplotlib.patches    import Polygon
 import math
+
+# für Filename
+import sys
+from pathlib import Path
+
 
 ##
 # class BmsGraphLib
@@ -141,19 +147,9 @@ class BmswGraphLib:
 
 	##
 	# Zeichne eine Markierung (dot, cross, ...
-	def dot(self, x, y, marker='o', color='none'):
-		if('r' in marker): #r: red, ansonten überschreibe mit "color"
-			color="#ff0000"
-		if('g' in marker): #g: green, ansonten überschreibe mit "color"
-			color="#00aa00"
-		if('b' in marker): #b: blue, ansonten überschreibe mit "color"
-			color="#0044ff"
-		if('k' in marker): #k: black, ansonten überschreibe mit "color"
-			color="#000001"
-		if('none' == color):
-			self.ax.plot(x, y, marker, color='#0044ff')
-		else: 
-			self.ax.plot(x, y, marker, color=color)
+	# Dies ist eine simple Weiterleitung an "ax.plot()"
+	def dot(self, *args, **kwargs):
+			self.ax.plot(*args, **kwargs)
 
 	##
 	# Jedes Bild kann mit
@@ -170,6 +166,10 @@ class BmswGraphLib:
 		"""
 		# bbox_inches='tight' sorgt dafür, dass die Achsenbeschriftungen
 		# nicht abgeschnitten werden.
+
+		if(len(filename) < 4):
+			filename = filename = Path(sys.argv[0]).stem + "." + filename
+		
 		self.fig.savefig(filename, dpi=dpi, bbox_inches='tight', transparent=False)
 		print(f"Grafik erfolgreich als {filename} gespeichert.")
 

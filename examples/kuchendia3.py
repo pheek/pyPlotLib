@@ -9,5 +9,5 @@ anz_sbs       = [3, 8, 2, 9, 16] #sbs = Schülerinnen bzw. Schülerers
 b.draw_pie_chart(lieblingsfach, anz_sbs, mode="none", title="Lieblingsfach")
 
 ## show and (optional) save
-#b.save_system("kuchendia3.png")
+#b.save_system("png")
 b.show()

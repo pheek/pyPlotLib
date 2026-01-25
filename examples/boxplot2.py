@@ -16,5 +16,5 @@ b.draw_boxplot(daten_klasse_a, y_position=2, label="Klasse A", color='#3498db', 
 b.draw_boxplot(daten_klasse_b, y_position=4, label="Klasse B", color='#2ecc71')
 
 # optional save:
-#b.save_system("boxplot2.png")
+#b.save_system("png")
 b.show()

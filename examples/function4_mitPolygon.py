@@ -26,7 +26,7 @@ b.draw_polygon(dreieck_punkte, color='#8e44ff', label="Fläche A")
 b.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
 # E anzeigen und (optional) speichern
-#b.save_system("function4.png")
-#b.save_system("function4.eps")
+#b.save_system("png")
+#b.save_system("eps")
 # und anzeigen (optional, aber von Vorteil)
 b.show()

@@ -9,5 +9,5 @@ anzahl_probanden = [3, 8, 2, 16, 11, 5]
 b.draw_pie_chart(geschmack, anzahl_probanden, mode="relativ", title="Geschmacksrichtung")
 
 ## save (optional) and show
-#b.save_system("kuchendia2.svg")
+#b.save_system("svg")
 b.show()

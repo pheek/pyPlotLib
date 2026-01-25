@@ -31,8 +31,8 @@ b.dot(-3, 2, 'gx')  # grünes Kreuz
 b.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
 # C. speichen (optional) anzeigen
-#b.save_system("function2.png")
-#b.save_system("function2.eps")
-#b.save_system("function2.svg")
-#b.save_system("function2.pdf")
+#b.save_system("png")
+#b.save_system("eps")
+#b.save_system("svg")
+#b.save_system("pdf")
 b.show()

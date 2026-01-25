@@ -9,6 +9,6 @@ absatz = [3, 8, 2, 16]
 b.draw_pie_chart(marken, absatz, mode="absolute", title="Marktanteile Handys")
 
 # optional speichern
-#b.save_system("kuchendia1.png")
+#b.save_system("png")
 # anzeigen:
 b.show()

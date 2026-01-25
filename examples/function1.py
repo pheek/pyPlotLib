@@ -19,9 +19,9 @@ b.text(1.5, 1.7, 'S=(2.2|1.6)',color='#0000bb')
 b.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
 # anzeigen und (optional) speichern
-#b.save_system("function1.png")
-#b.save_system("function1.eps")
-#b.save_system("function1.pdf")
-#b.save_sysetm("function1.jpg")
+#b.save_system("png")
+#b.save_system("eps")
+#b.save_system("pdf")
+#b.save_sysetm("jpg")
 # und anzeigen (optional, aber von Vorteil)
 b.show()

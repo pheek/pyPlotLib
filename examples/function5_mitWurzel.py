@@ -28,7 +28,7 @@ for i, p in enumerate(dreieck_punkte):
 b.legend(loc='upper left', bbox_to_anchor=(1, 1))
 
 # F anzeigen und (optional) speichern
-#b.save_system("function5.png")
-#b.save_system("function5.eps")
+#b.save_system("png")
+#b.save_system("eps")
 # und anzeigen (optional, aber von Vorteil)
 b.show()
