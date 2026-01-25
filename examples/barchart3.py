@@ -21,7 +21,7 @@ b.set_custom_labels(pos_x, groessen)
 #evtl schief stellen
 b.ax.set_xticklabels(groessen, fontweight='bold', rotation=60, ha='right')
 
-b.legend(["Verkäufe Autos"])
+b.legend(["Verkäufe Autos"], loc='upper center')
 
 ## save (optional) and show
 #b.save_system("png")

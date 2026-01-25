@@ -6,7 +6,7 @@
 #    (with help of gemini.google.com)
 #    src: https://www.github.com/pheek/pyPlotLib
 # Das Schweizer Koordinatensystem hat Pfeile, die über das Gitter hinausragen,
-# was beim standard-Plott (mathplotilb/gnuplot/geogebra) nicht der Fall ist.
+# was beim standard-Plot (mathplotilb/gnuplot/geogebra) nicht der Fall ist.
 #
 # Mit dieser Library sind möglich:
 #   Funktionen
@@ -27,16 +27,14 @@ import numpy                 as     np
 from   matplotlib.ticker     import MultipleLocator, FuncFormatter
 from   matplotlib.transforms import offset_copy
 from   matplotlib.patches    import Polygon
-import math
 
-# für Filename
+# für Filenamen Erkennung
 import sys
-from pathlib import Path
-
+from   pathlib               import Path
 
 ##
 # class BmsGraphLib
-# import and use as in the examples/
+# import and use as in the /examples/
 #
 
 class BmswGraphLib:
@@ -45,7 +43,7 @@ class BmswGraphLib:
 	# fig: figure
 	# ax : axes
 
-
+	
 	##
 	# bmsw Koordinatensystem
 	# Abgesehen vom Kreisdiagramm sollte immer ein Koordinatensystem
@@ -53,7 +51,6 @@ class BmswGraphLib:
 	# x_min, ... geben den Ausschnitt im kartesischen Koordinatensystem an.
 	# show_y_axis sollte beim Boxplot auf False gesetzt werden.
 	#
-
 	def bmsw_coordinate_system(self, x_min, x_max, y_min, y_max, show_y_axis=True):
 		"""
 		Erstellt ein Schweizer Koordinatensystem mit hierarchischem Gitter.
@@ -62,8 +59,9 @@ class BmswGraphLib:
 		self.fig, self.ax = plt.subplots(figsize=(10, 8))
 
 		# 1. Achsen-Limits (Puffer für Pfeile)
-		self.ax.set_xlim(x_min - 1, x_max + 1)
-		self.ax.set_ylim(y_min - 1, y_max + 1)
+		puffer = 0.5
+		self.ax.set_xlim(x_min - puffer, x_max + puffer)
+		self.ax.set_ylim(y_min - puffer, y_max + puffer)
 
 		# 2. Achsen zentrieren (Spines)
 		self.ax.spines['bottom'].set_position('zero')
@@ -102,14 +100,15 @@ class BmswGraphLib:
 
 		# Formatter für die X-Achse (blendet Randzahlen aus)
 		def x_formatter(val, pos):
-			if np.isclose(val, x_min-1) or np.isclose(val, x_max+1): return ''
+			if val < x_min or val > x_max: return ''
 			return f'{val:g}'
 		self.ax.xaxis.set_major_formatter(FuncFormatter(x_formatter))
 
 		if show_y_axis:
 			self.ax.yaxis.set_major_locator(MultipleLocator(major_step))
 			def y_formatter(val, pos):
-				if np.isclose(val, y_min-1) or np.isclose(val, y_max+1): return ''
+				if val < y_min or val > y_max: return ''
+				if np.isclose(val, 0      ): return ''
 				return f'{val:g}'
 			self.ax.yaxis.set_major_formatter(FuncFormatter(y_formatter))
 		else:
@@ -126,24 +125,25 @@ class BmswGraphLib:
 
 		# 6. Pfeile und Beschriftung
 		# X-Achse (immer vorhanden)
-		self.ax.plot(x_max + 1, 0, ">k", clip_on=False, zorder=5)
+		self.ax.plot(x_max + puffer, 0, ">k", clip_on=False, zorder=5)
 		x_offset = offset_copy(self.ax.transData, fig=self.fig, x=0, y=-4, units='points')
-		self.ax.text(x_max + 1, 0, 'x', fontsize=14, fontweight='bold', ha='center', va='top', transform=x_offset)
+		self.ax.text(x_max + puffer, 0, 'x', fontsize=14, fontweight='bold', ha='center', va='top', transform=x_offset)
 
 		# Y-Achse (nur wenn gewünscht)
 		if show_y_axis:
-			self.ax.plot(0, y_max + 1, "^k", clip_on=False, zorder=5)
+			self.ax.plot(0, y_max + puffer, "^k", clip_on=False, zorder=5)
 			y_offset = offset_copy(self.ax.transData, fig=self.fig, x=4, y=3, units='points')
-			self.ax.text(0, y_max + 1, 'y', fontsize=14, fontweight='bold', va='center', transform=y_offset)
+			self.ax.text(0, y_max + puffer, 'y', fontsize=14, fontweight='bold', va='center', transform=y_offset)
 
 		self.ax.set_aspect('equal')
-#		return fig, ax
 # END bmswCoordinateSystem
+
 
 	##
 	# Schreibe einen Text
 	def text(self, x, y, label, color="#0044cc", fontweight='bold',ha='center'):
 		self.ax.text(x, y, label, color=color, fontweight=fontweight, ha=ha)
+
 
 	##
 	# Zeichne eine Markierung (dot, cross, ...
@@ -151,29 +151,12 @@ class BmswGraphLib:
 	def dot(self, *args, **kwargs):
 			self.ax.plot(*args, **kwargs)
 
+
 	##
-	# Jedes Bild kann mit
-	#  save_system(fig, "meinbild.png")
-	# oder mit
-	#  save_system(fig, "meinbild.svg") (oder .eps / .pdf)
-	# gespeichert werden.
-	# mit plt.show() wird es jeweils am Ende angezeigt.
-	def save_system(self, filename, dpi=300):
-		"""
-		Speichert die Grafik in hoher Qualität.
-		.png -> Rastergrafik (gut für Word/Web)
-		.eps oder .pdf -> Vektorgrafik (perfekt für LaTeX/Druck, unendlich skalierbar)
-		"""
-		# bbox_inches='tight' sorgt dafür, dass die Achsenbeschriftungen
-		# nicht abgeschnitten werden.
-
-		if(len(filename) < 4):
-			filename = filename = Path(sys.argv[0]).stem + "." + filename
-		
-		self.fig.savefig(filename, dpi=dpi, bbox_inches='tight', transparent=False)
-		print(f"Grafik erfolgreich als {filename} gespeichert.")
-
-
+	# Beschrifteter Punkt
+	def labeled_dot(self, x, y, label, color='#ff0000', offset=(0.2, 0.1)):
+		self.dot(x, y, 'o', color=color) # Punkt
+		self.text(x + offset[0], y + offset[1], label, color=color, ha='left')
 
 	##
 	# Zeichnen von Funktionen
@@ -191,8 +174,16 @@ class BmswGraphLib:
 		x_range: Ein Tupel (start, ende)
 		"""
 		x = np.linspace(x_range[0], x_range[1], 400)
-		y = func(x)
-		line, = self.ax.plot(x, y, linewidth=2, label=label, color=color)
+
+		with np.errstate(all='ignore'):
+			v_func = np.vectorize(func)
+			try:
+				y = func(x)
+			except (TypeError, ValueError):
+				y = v_func(x)
+
+		line, = self.ax.plot(x, y, linewidth=2, label=label, color=color, zorder=2)
+
 		return line
 
 
@@ -220,7 +211,6 @@ class BmswGraphLib:
 		return poly
 
 
-
 	##
 	# Ein Bar-Chart als "Säulendiagramm"
 	# mit "set_custom_labels" können die Säulen einzeln beschriftet werden.
@@ -238,7 +228,6 @@ class BmswGraphLib:
 		return bars
 
 
-
 	##
 	# Eigene Beschritfungen für draw_bar_chart()
 	#
@@ -251,6 +240,12 @@ class BmswGraphLib:
 		self.ax.set_xticks(x_values)
 		self.ax.set_xticklabels(labels, fontweight='bold', fontsize=12)
 
+
+	def set_trig_labels(self):
+		# Beispielhaft für ein System von -pi bis pi
+		positions = [-np.pi, -np.pi/2, 0, np.pi/2, np.pi, 1.5*np.pi, 2*np.pi]
+		labels = [r'$-\pi$', r'$-\frac{\pi}{2}$', '0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$']
+		self.set_custom_labels(positions, labels)
 
 
 	##
@@ -272,7 +267,6 @@ class BmswGraphLib:
 		n, bins, patches = self.ax.hist(data, bins=bins, color=color, label=label,
 		                           edgecolor='black', linewidth=1, zorder=3, alpha=0.8)
 		return n, bins
-
 
 
 	##
@@ -309,7 +303,6 @@ class BmswGraphLib:
 			# und y in Achsen-Koordinaten (0 bis 1) gemessen wird.
 			self.ax.set_xlabel(axis_label, fontweight='bold', fontsize=12, labelpad=15)
 		return bp
-
 
 
 	# Unahbhängig vom Koordinatensystem:
@@ -368,29 +361,76 @@ class BmswGraphLib:
 		else:
 			wedges, texts = results
 
-			if title:
-				self.ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
+		if title:
+			self.ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
 
-			self.ax.axis('equal')
-#			return fig, ax
+		self.ax.axis('equal')
+
+
 
 	## draw legend (muss noch klarer sein, wo genau zu zeichnen)
-	def legend(self,caption='',loc='upper right',bbox_to_anchor=(1,1)):
-		self.ax.legend(caption)
+	# mögliche Werte:
+	# loc = "upper right"
+	# loc = "center righ"
+	# loc = "center left"
+	# loc = "lower right"
+	# loc = "lower center"
+	# loc = "center"
+	def legend(self, *args, **hargs):
+		self.ax.legend(*args, **hargs)
 
-	## show all
+
+	##
+	# Jedes Bild kann mit
+	#  save_system(fig, "meinbild.png")
+	# oder mit
+	#  save_system(fig, "meinbild.svg") (oder .eps / .pdf)
+	# gespeichert werden.
+	# mit plt.show() wird es jeweils am Ende angezeigt.
+	def save_system(self, filename, dpi=300):
+		"""
+		Speichert die Grafik in hoher Qualität.
+		.png -> Rastergrafik (gut für Word/Web)
+		.eps oder .pdf -> Vektorgrafik (perfekt für LaTeX/Druck, unendlich skalierbar)
+		"""
+		# bbox_inches='tight' sorgt dafür, dass die Achsenbeschriftungen
+		# nicht abgeschnitten werden.
+
+		if(len(filename) < 4):
+			filename = Path(sys.argv[0]).stem + "." + filename
+
+		self.fig.savefig(filename, dpi=dpi, bbox_inches='tight', transparent=False)
+		print(f"Grafik erfolgreich als {filename} gespeichert.")
+
+
+	## show
+	# Anzeigen der Graphik in neuem Fenster
 	def show(self):
 		plt.show()
 
-	def sqrt(self, x):
-		return x**0.5
+  ##
+  # Konstruktor
+	def __init__(self):
+		# Delegation an NumPy für Vektorfähigkeit
+		self.log   = np.log
+		self.log10 = np.log10
+		self.sin   = np.sin
+		self.cos   = np.cos
+		self.tan   = np.tan
+		self.sqrt  = np.sqrt # Überschreibt deine x**0.5 Version mit der schnelleren np-Variante
+		self.exp   = np.exp
+		self.pi    = np.pi
 # end class BmswGrapLib
 
-## create a single instance
+
+
+## create a global instance
 b = BmswGraphLib()
 
+
+
 ##
-# draw a simple graph
+# Demo: draw a simple graph
 def demo():
 	b = BmswGraphLib()
 
@@ -398,6 +438,7 @@ def demo():
 	b.draw_function_into_system(lambda x: -0.3 * x**2 + 2*x + 1, (-2, 1.5), label="Parabel 2", color='#ff0000')
 	b.show()
 #	b.save_system("demo.png")# optional
+
 
 ## start Main_ bmsw_graph_lib.py
 # shows a little demo

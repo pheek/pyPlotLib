@@ -1,0 +1,28 @@
+#!/usr/bin/python3
+
+from bmsw_graph_lib import b
+
+# A. System erstellen (z.B. -4 bis 4)
+b.bmsw_coordinate_system(-3, 6, -3, 1)
+
+# Funktion definieren
+def f(x):	return b.cos(x) - 0.5
+
+# 1. Eine Parabel in Scheitelform
+b.draw_function_into_system(f, (-3, 6), label="Cosinus verschoben", color='#ccddee')
+
+b.set_trig_labels()
+
+# 2. Scheitelpunkt und Text
+b.labeled_dot(2.5, 0.5, label=r'$\cos(x) - \frac{1}{2}$', color="#000066")
+
+# 3. Legende anzeigen
+b.legend(loc='upper left')
+
+# anzeigen und (optional) speichern
+#b.save_system("png")
+#b.save_system("eps")
+#b.save_system("pdf")
+#b.save_sysetm("jpg")
+# und anzeigen (optional, aber von Vorteil)
+b.show()
