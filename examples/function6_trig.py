@@ -1,28 +1,32 @@
 #!/usr/bin/python3
 
 from bmsw_graph_lib import b
-import math
+
+# Optional set Font Size
+b.set_fontsize(20)
 
 # A. System erstellen (z.B. -4 bis 4)
-b.bmsw_coordinate_system(-1, 4, -4, 2)
+b.bmsw_coordinate_system(-3, 6.2, -2, 1, trig=True)
 
 # Funktion definieren
-def f(x):	return b.sqrt(x) - 1.5
+def f(x):	return b.cos(x) - 0.5
 
 # 1. Eine Parabel in Scheitelform
-b.draw_function_into_system(f, (-1, 3.5), label="Parabel", color='#ccddee')
+b.draw_function_into_system(f, (-3, 6), label="Cosinus verschoben", color='#ccddee')
+
+b.set_trig_labels()
 
 # 2. Scheitelpunkt und Text
-b.dot(2, 1.5, 'bo') # Ein blauer (b) Punkt (o) bei (2, 1.5)
-b.text(1.5, 1.7, 'S=(2.2|1.6)',color='#0000bb')
+b.labeled_dot(2.5, 0.5, label=r'$\cos(x) - \frac{1}{2}$', color="#000066")
 
 # 3. Legende anzeigen
-b.legend(loc='upper left', bbox_to_anchor=(1, 1))
+b.legend(loc='upper left')
 
 # anzeigen und (optional) speichern
 #b.save_system("png")
 #b.save_system("eps")
 #b.save_system("pdf")
 #b.save_sysetm("jpg")
+#b.save_sysetm("svg")
 # und anzeigen (optional, aber von Vorteil)
 b.show()

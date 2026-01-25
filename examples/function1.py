@@ -2,6 +2,9 @@
 
 from bmsw_graph_lib import b
 
+# optional: Font-Size vergrößern
+#b.set_fontsize(30)
+
 # A. System erstellen (z.B. -4 bis 4)
 b.bmsw_coordinate_system(-1, 4, -4, 2)
 
@@ -23,5 +26,6 @@ b.legend(loc='upper left', bbox_to_anchor=(1, 1))
 #b.save_system("eps")
 #b.save_system("pdf")
 #b.save_sysetm("jpg")
+#b.save_sysetm("svg")
 # und anzeigen (optional, aber von Vorteil)
 b.show()

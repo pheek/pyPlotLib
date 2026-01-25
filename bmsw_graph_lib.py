@@ -38,12 +38,28 @@ from   pathlib               import Path
 #
 
 class BmswGraphLib:
-
 	## attributes:
 	# fig: figure
 	# ax : axes
 
-	
+	##
+  # Konstruktor
+	def __init__(self):
+		self.base_fontsize = 12  # Standard-Schriftgröße
+		# Delegation an NumPy für Vektorfähigkeit
+		self.log   = np.log
+		self.log10 = np.log10
+		self.sin   = np.sin
+		self.cos   = np.cos
+		self.tan   = np.tan
+		self.sqrt  = np.sqrt # Überschreibt deine x**0.5 Version mit der schnelleren np-Variante
+		self.exp   = np.exp
+		self.pi    = np.pi
+
+	def set_fontsize(self, size):
+		""" Setzt die globale Schriftgröße für alle Elemente. """
+		self.base_fontsize = size
+
 	##
 	# bmsw Koordinatensystem
 	# Abgesehen vom Kreisdiagramm sollte immer ein Koordinatensystem
@@ -51,98 +67,28 @@ class BmswGraphLib:
 	# x_min, ... geben den Ausschnitt im kartesischen Koordinatensystem an.
 	# show_y_axis sollte beim Boxplot auf False gesetzt werden.
 	#
-	def bmsw_coordinate_system(self, x_min, x_max, y_min, y_max, show_y_axis=True):
+
+	def bmsw_coordinate_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False):
 		"""
-		Erstellt ein Schweizer Koordinatensystem mit hierarchischem Gitter.
-		show_y_axis=False blendet die y-Achse und deren Beschriftung für Boxplots aus.
+		Factory-Methode: Erstellt das System basierend auf dem Modus (Standard oder Trig).
 		"""
 		self.fig, self.ax = plt.subplots(figsize=(10, 8))
 
-		# 1. Achsen-Limits (Puffer für Pfeile)
-		puffer = 0.5
-		self.ax.set_xlim(x_min - puffer, x_max + puffer)
-		self.ax.set_ylim(y_min - puffer, y_max + puffer)
-
-		# 2. Achsen zentrieren (Spines)
-		self.ax.spines['bottom'].set_position('zero')
-		if show_y_axis:
-			self.ax.spines['left'].set_position('zero')
+		# Entscheidung, welche Logik genutzt wird
+		if trig:
+			impl = _BmswTrigImpl(self)
 		else:
-			self.ax.spines['left'].set_color('none')
+			impl = _BmswStandardImpl(self)
 
-		self.ax.spines['right'].set_color('none')
-		self.ax.spines['top'].set_color('none')
+		impl.setup(x_min, x_max, y_min, y_max, show_y_axis)
 
-		# 3. Dynamische Gitter-Intervalle
-		width_x = x_max - x_min
-		major_step = 5 if width_x > 20 else 1
-		minor_step = 1 if width_x > 20 else 0.5
-
-		# 4. Gitter zeichnen (begrenzt auf x_min/max und y_min/max)
-		# Feines Gitter
-		m_x = np.arange(x_min, x_max + 0.01, minor_step)
-		m_y = np.arange(y_min, y_max + 0.01, minor_step)
-		for x in m_x:
-			self.ax.plot([x, x], [y_min, y_max], color='#d0d0f0', linewidth=0.5, zorder=0)
-		for y in m_y:
-			self.ax.plot([x_min, x_max], [y, y], color='#d0d0f0', linewidth=0.5, zorder=0)
-
-		# Hauptgitter
-		M_x = np.arange(x_min, x_max + 0.01, major_step)
-		M_y = np.arange(y_min, y_max + 0.01, major_step)
-		for x in M_x:
-			self.ax.plot([x, x], [y_min, y_max], color='#9090c0', linewidth=0.8, zorder=0)
-		for y in M_y:
-			self.ax.plot([x_min, x_max], [y, y], color='#9090c0', linewidth=0.8, zorder=0)
-
-		# 5. Ticks & Formatter (Zahlen)
-		self.ax.xaxis.set_major_locator(MultipleLocator(major_step))
-
-		# Formatter für die X-Achse (blendet Randzahlen aus)
-		def x_formatter(val, pos):
-			if val < x_min or val > x_max: return ''
-			return f'{val:g}'
-		self.ax.xaxis.set_major_formatter(FuncFormatter(x_formatter))
-
-		if show_y_axis:
-			self.ax.yaxis.set_major_locator(MultipleLocator(major_step))
-			def y_formatter(val, pos):
-				if val < y_min or val > y_max: return ''
-				if np.isclose(val, 0      ): return ''
-				return f'{val:g}'
-			self.ax.yaxis.set_major_formatter(FuncFormatter(y_formatter))
-		else:
-			self.ax.yaxis.set_major_locator(plt.NullLocator())
-
-		# Styling: Keine Strichlein (Ticks), nur Zahlen
-		self.ax.tick_params(axis='both', which='both', length=0, labelsize=11)
-
-		# Fontweight Bold für alle Achsenbeschriftungen
-		self.fig.canvas.draw()
-		plt.setp(self.ax.get_xticklabels(), fontweight='bold')
-		if show_y_axis:
-			plt.setp(self.ax.get_yticklabels(), fontweight='bold')
-
-		# 6. Pfeile und Beschriftung
-		# X-Achse (immer vorhanden)
-		self.ax.plot(x_max + puffer, 0, ">k", clip_on=False, zorder=5)
-		x_offset = offset_copy(self.ax.transData, fig=self.fig, x=0, y=-4, units='points')
-		self.ax.text(x_max + puffer, 0, 'x', fontsize=14, fontweight='bold', ha='center', va='top', transform=x_offset)
-
-		# Y-Achse (nur wenn gewünscht)
-		if show_y_axis:
-			self.ax.plot(0, y_max + puffer, "^k", clip_on=False, zorder=5)
-			y_offset = offset_copy(self.ax.transData, fig=self.fig, x=4, y=3, units='points')
-			self.ax.text(0, y_max + puffer, 'y', fontsize=14, fontweight='bold', va='center', transform=y_offset)
-
-		self.ax.set_aspect('equal')
 # END bmswCoordinateSystem
 
 
 	##
 	# Schreibe einen Text
 	def text(self, x, y, label, color="#0044cc", fontweight='bold',ha='center'):
-		self.ax.text(x, y, label, color=color, fontweight=fontweight, ha=ha)
+		self.ax.text(x, y, label, color=color, fontsize=self.base_fontsize, fontweight=fontweight, ha=ha)
 
 
 	##
@@ -223,8 +169,13 @@ class BmswGraphLib:
 		"""
 		# align='edge' setzt die linke Kante der Säule auf den x-Wert.
 		# align='center' (Standard) setzt die Mitte der Säule auf den x-Wert.
-		bars = self.ax.bar(x_values, y_values, width=width, color=color,
-		              label=label, edgecolor='black', linewidth=1, zorder=3)
+		bars = self.ax.bar(x_values, y_values,
+		                   width=width,
+		                   color=color,
+		                   label=label,
+		                   edgecolor='black',
+		                   linewidth=1,
+		                   zorder=3)
 		return bars
 
 
@@ -238,7 +189,7 @@ class BmswGraphLib:
 		labels: Die Texte (z. B. ['S', 'M', 'L'])
 		"""
 		self.ax.set_xticks(x_values)
-		self.ax.set_xticklabels(labels, fontweight='bold', fontsize=12)
+		self.ax.set_xticklabels(labels, fontweight='bold', fontsize=self.base_fontsize + 2)
 
 
 	def set_trig_labels(self):
@@ -264,8 +215,14 @@ class BmswGraphLib:
 
 		# Histogramm zeichnen
 		# edgecolor='black' sorgt für die Trennung der Säulen (Schulbuch-Stil)
-		n, bins, patches = self.ax.hist(data, bins=bins, color=color, label=label,
-		                           edgecolor='black', linewidth=1, zorder=3, alpha=0.8)
+		n, bins, patches = self.ax.hist(data,
+		                                bins=bins,
+		                                color=color,
+		                                label=label,
+		                                edgecolor='black',
+		                                linewidth=1,
+		                                zorder=3,
+		                                alpha=0.8)
 		return n, bins
 
 
@@ -284,24 +241,25 @@ class BmswGraphLib:
 		# patch_artist=True erlaubt das Füllen der Box mit Farbe
 		# vert=False sorgt für die horizontale Ausrichtung
 		# positions=[y_position] setzt den Boxplot auf die gewünschte Höhe
-		bp = self.ax.boxplot(data, vert=False, positions=[y_position], widths=height,
-		                patch_artist=True, manage_ticks=False,
-		                boxprops=dict(facecolor=fill_color, color=color, linewidth=1.5),
-		                medianprops=dict(color=color, linewidth=2.5), # Roter Median
-		                whiskerprops=dict(color=color, linewidth=2.5),
-		                capprops=dict(color=color, linewidth=1.5),
-		                zorder=4)
+		bp = self.ax.boxplot(data,
+		                     vert=False,
+		                     positions=[y_position], widths=height,
+		                     patch_artist=True, manage_ticks=False,
+		                     boxprops=dict(facecolor=fill_color, color=color, linewidth=1.5),
+		                     medianprops=dict(color=color, linewidth=2.5), # Roter Median
+		                     whiskerprops=dict(color=color, linewidth=2.5),
+		                     capprops=dict(color=color, linewidth=1.5),
+		                     zorder=4)
 
 		# Optionales Label links neben den Boxplot setzen
 		if label:
-			self.ax.text(min(data) - 0.5, y_position, label,
-			        fontweight='bold', va='center', ha='right', fontsize=10)
+			self.ax.text(min(data) - 0.5, y_position, label, fontweight='bold', va='center', ha='right', fontsize=self.base_fontsize)
 		# Achsen-Beschriftung
 		if axis_label:
 			# Wir platzieren den Text unter der X-Achse (y-Position leicht negativ)
 			# transform=self.ax.get_xaxis_transform() sorgt dafür, dass x in Daten-Koordinaten
 			# und y in Achsen-Koordinaten (0 bis 1) gemessen wird.
-			self.ax.set_xlabel(axis_label, fontweight='bold', fontsize=12, labelpad=15)
+			self.ax.set_xlabel(axis_label, fontweight='bold', fontsize=self.base_fontsize, labelpad=15)
 		return bp
 
 
@@ -350,7 +308,7 @@ class BmswGraphLib:
 		                     pctdistance=0.7,
 		                     explode=[0.02] * len(values),
 		                     labeldistance=1.15,
-		                     textprops={'fontweight': 'bold', 'fontsize': 14}
+		                     textprops={'fontweight': 'bold', 'fontsize': self.base_fontsize+2}
 		                    )
 
 		# Entpacken je nach Modus
@@ -362,7 +320,7 @@ class BmswGraphLib:
 			wedges, texts = results
 
 		if title:
-			self.ax.set_title(title, fontsize=16, fontweight='bold', pad=20)
+			self.ax.set_title(title, fontsize=self.base_fontsize+4, fontweight='bold', pad=20)
 
 		self.ax.axis('equal')
 
@@ -408,19 +366,137 @@ class BmswGraphLib:
 	def show(self):
 		plt.show()
 
-  ##
-  # Konstruktor
-	def __init__(self):
-		# Delegation an NumPy für Vektorfähigkeit
-		self.log   = np.log
-		self.log10 = np.log10
-		self.sin   = np.sin
-		self.cos   = np.cos
-		self.tan   = np.tan
-		self.sqrt  = np.sqrt # Überschreibt deine x**0.5 Version mit der schnelleren np-Variante
-		self.exp   = np.exp
-		self.pi    = np.pi
 # end class BmswGrapLib
+
+
+class _BmswBaseImpl:
+	""" Basis-Logik für das Schweizer Koordinatensystem. """
+	def __init__(self, parent):
+		self.p = parent
+
+	def setup(self, x_min, x_max, y_min, y_max, show_y_axis):
+		puffer = 0.5
+		self.p.ax.set_xlim(x_min - puffer, x_max + puffer)
+		self.p.ax.set_ylim(y_min - puffer, y_max + puffer)
+		self.p.ax.spines['bottom'].set_position('zero')
+
+		if show_y_axis:
+			self.p.ax.spines['left'].set_position('zero')
+		else:
+			self.p.ax.spines['left'].set_color('none')
+
+		self.p.ax.spines['right'].set_color('none')
+		self.p.ax.spines['top'].set_color('none')
+
+		self.draw_grid(x_min, x_max, y_min, y_max)
+		self.setup_ticks(x_min, x_max, y_min, y_max, show_y_axis)
+		self.draw_arrows(x_max, y_max, show_y_axis, puffer)
+
+	def draw_arrows(self, x_max, y_max, show_y_axis, puffer):
+		# X-Achse
+		self.p.ax.plot(x_max + puffer, 0, ">k", clip_on=False, zorder=5)
+		x_off = offset_copy(self.p.ax.transData, fig=self.p.fig, x=0, y=-4, units='points')
+		self.p.ax.text(x_max + puffer, 0, self.get_x_name(), fontsize=self.p.base_fontsize+2, fontweight='bold', ha='center', va='top', transform=x_off)
+		# Y-Achse
+		if show_y_axis:
+			self.p.ax.plot(0, y_max + puffer, "^k", clip_on=False, zorder=5)
+			y_off = offset_copy(self.p.ax.transData, fig=self.p.fig, x=4, y=3, units='points')
+			self.p.ax.text(0, y_max + puffer, 'y', fontsize=self.p.base_fontsize+2, fontweight='bold', va='center', transform=y_off)
+
+
+class _BmswStandardImpl(_BmswBaseImpl):
+	def get_x_name(self): return "x"
+
+	def draw_grid(self, x_min, x_max, y_min, y_max):
+		# Standard Gitter-Logik
+		width_x = x_max - x_min
+		major, minor = (5, 1) if width_x > 20 else (1, 0.5)
+		for x in np.arange(x_min, x_max + 0.01, minor):
+			self.p.ax.plot([x, x], [y_min, y_max], color='#d0d0f0', lw=0.5, zorder=0)
+		for x in np.arange(x_min, x_max + 0.01, major):
+			self.p.ax.plot([x, x], [y_min, y_max], color='#9090c0', lw=0.8, zorder=0)
+		for y in np.arange(y_min, y_max + 0.01, minor):
+			self.p.ax.plot([x_min, x_max], [y, y], color='#d0d0f0', lw=0.5, zorder=0)
+		for y in np.arange(y_min, y_max + 0.01, major):
+			self.p.ax.plot([x_min, x_max], [y, y], color='#9090c0', lw=0.8, zorder=0)
+
+	def setup_ticks(self, x_min, x_max, y_min, y_max, show_y_axis):
+		# X-Achse: Ticks setzen
+		x_ticks = np.arange(x_min, x_max + 0.1, 1.0)
+		self.p.ax.set_xticks(x_ticks)
+		
+		# Schriftgröße für X- und Y-Achse (Zahlen) anpassen
+		self.p.ax.tick_params(axis='both', which='major', labelsize=self.p.base_fontsize)
+
+		self.p.ax.xaxis.set_major_formatter(FuncFormatter(
+			lambda v, p: f'{v:g}' if x_min <= v <= x_max else ''
+		))
+
+		# Y-Achse
+		if show_y_axis:
+			y_ticks = np.arange(y_min, y_max + 0.1, 1.0)
+			self.p.ax.set_yticks(y_ticks)
+			self.p.ax.yaxis.set_major_formatter(FuncFormatter(
+				lambda v, p: '' if np.isclose(v, 0) or v < y_min or v > y_max else f'{v:g}'
+			))
+		else:
+			self.p.ax.set_yticks([])
+			self.p.ax.yaxis.set_major_formatter(plt.NullFormatter())
+
+
+class _BmswTrigImpl(_BmswBaseImpl):
+	def get_x_name(self): return r"$\varphi$"
+
+	def draw_grid(self, x_min, x_max, y_min, y_max):
+		# Hilfsfunktion für "saubere" Gitterstarts (verhindert Verschiebung)
+		def get_clean_range(start, end, step):
+			first_tick = np.ceil(start / step) * step
+			return np.arange(first_tick, end + 0.01, step)
+
+		# Vertikale Linien (Winkel)
+		# 30° Minor (sehr fein)
+		for x in get_clean_range(x_min, x_max, np.pi/6):
+			self.p.ax.plot([x, x], [y_min, y_max], color='#f0f0f8', lw=0.4, zorder=0)
+		# 90° Major (etwas kräftiger)
+		for x in get_clean_range(x_min, x_max, np.pi/2):
+			self.p.ax.plot([x, x], [y_min, y_max], color='#e0e0f5', lw=0.7, zorder=0)
+
+		# Horizontale Linien (Y-Werte) - Diese fehlten!
+		# Wir nutzen hier die Standard-Schritte (1.0 und 0.5), da y meist linear bleibt
+		for y in np.arange(np.floor(y_min), y_max + 0.01, 0.5):
+			self.p.ax.plot([x_min, x_max], [y, y], color='#f0f0f8', lw=0.4, zorder=0)
+		for y in np.arange(np.floor(y_min), y_max + 0.01, 1.0):
+			self.p.ax.plot([x_min, x_max], [y, y], color='#e0e0f5', lw=0.7, zorder=0)
+
+	def setup_ticks(self, x_min, x_max, y_min, y_max, show_y_axis):
+		# X-Achse (Winkel)
+		start_x = np.ceil(x_min / (np.pi/2)) * (np.pi/2)
+		positions = np.arange(start_x, x_max + 0.01, np.pi/2)
+		labels = [self._make_pi_label(p) for p in positions]
+		self.p.ax.set_xticks(positions)
+		# Hier hast du es schon richtig gemacht:
+		self.p.ax.set_xticklabels(labels, fontsize=self.p.base_fontsize, fontweight='bold')
+
+		# Y-Achse (Zahlen)
+		if show_y_axis:
+			y_ticks = np.arange(np.ceil(y_min), np.floor(y_max) + 0.1, 1.0)
+			self.p.ax.set_yticks(y_ticks)
+			# NEU: Auch hier die Schriftgröße für die Y-Zahlen setzen
+			self.p.ax.tick_params(axis='y', labelsize=self.p.base_fontsize)
+			self.p.ax.yaxis.set_major_formatter(FuncFormatter(
+				lambda v, p: '' if np.isclose(v, 0) or v < y_min or v > y_max else f'{v:g}'
+			))
+		else:
+			self.p.ax.set_yticks([])
+
+	def _make_pi_label(self, val):
+		if np.isclose(val, 0): return '0'
+		if np.isclose(val, np.pi): return r'$\pi$'
+		if np.isclose(val, -np.pi): return r'$-\pi$'
+		# Vereinfachte Brüche (z.B. pi/2)
+		frac = val / np.pi
+		return r'$%.1f\pi$' % frac
+
 
 
 

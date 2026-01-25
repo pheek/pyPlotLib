@@ -2,6 +2,9 @@
 
 from bmsw_graph_lib import b
 
+#optional set Font Size
+#b.set_fontsize(20)
+
 # 1. System erstellen, das bei 0 startet (z.B. bis x=6, y=5)
 # Wir geben -1 als Min an, damit die Achsen nach links/unten noch etwas Platz haben
 b.bmsw_coordinate_system(0, 6, 0, 5)

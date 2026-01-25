@@ -53,7 +53,7 @@ dots.extend([ [-5,3], [5,-3]])
 # draw all dots 
 for dot in dots:
 	b.dot(dot[0], dot[1], 'ko')
-	
+
 #optional speichern
 #b.save_system('png')
 b.show()

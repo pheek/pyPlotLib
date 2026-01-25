@@ -2,6 +2,9 @@
 
 from bmsw_graph_lib import b
 
+# 0. Default Fontsize = 12: This is for Labels
+b.set_fontsize(14)
+
 # 1. System erstellen 
 b.bmsw_coordinate_system(0, 6, 0, 6)
 
@@ -21,6 +24,7 @@ b.ax.set_xticklabels(groessen, fontweight='bold', ha='right')
 
 # 6. Legende zeichnen
 b.legend(["Verkäufe"])
+
 
 ## save (optional) and show
 #b.save_system("png")
