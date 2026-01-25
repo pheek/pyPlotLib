@@ -2,21 +2,13 @@
 
 from bmsw_graph_lib import b
 
-# A. System erstellen (z.B. -4 bis 4)
-b.bmsw_coordinate_system(-1, 4, -4, 2)
+# System erstellen (z.B. -4 bis 4)
+b.draw_system(-1, 4, -3, 1)
 
-# Funktion definieren
-def f(x):	return b.sqrt(x) - 1.5
+# Eine Parabel in Scheitelform
+b.draw_function_into_system(lambda x: b.sqrt(x) - 1.5, (-1, 3.5), label="Wurzel", color='#ccddee')
 
-# 1. Eine Parabel in Scheitelform
-b.draw_function_into_system(f, (-1, 3.5), label="Parabel", color='#ccddee')
-
-# 2. Scheitelpunkt und Text
-b.dot(2, 1.5, 'bo') # Ein blauer (b) Punkt (o) bei (2, 1.5)
-b.text(1.5, 1.7, 'S=(2.2|1.6)',color='#0000bb')
-
-# 3. Legende anzeigen
-b.legend(loc='upper left', bbox_to_anchor=(1, 1))
+b.dot(0, -1.5)
 
 # anzeigen und (optional) speichern
 #b.save_system("png")

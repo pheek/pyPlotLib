@@ -2,7 +2,7 @@
 from bmsw_graph_lib import b
 
 # 1. System erstellen (z.B. von 0 bis 10 auf beiden Achsen)
-b.bmsw_coordinate_system(0, 31, 0, 11)
+b.draw_system(0, 31, 0, 11)
 
 # 2. Beispieldaten (Rohdaten)
 # Diese Daten werden vom Histogramm automatisch gezählt

@@ -68,7 +68,7 @@ class BmswGraphLib:
 	# show_y_axis sollte beim Boxplot auf False gesetzt werden.
 	#
 
-	def bmsw_coordinate_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False):
+	def draw_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False):
 		"""
 		Factory-Methode: Erstellt das System basierend auf dem Modus (Standard oder Trig).
 		"""
@@ -95,7 +95,15 @@ class BmswGraphLib:
 	# Zeichne eine Markierung (dot, cross, ...
 	# Dies ist eine simple Weiterleitung an "ax.plot()"
 	def dot(self, *args, **kwargs):
-			self.ax.plot(*args, **kwargs)
+		"""
+		Zeichnet einen Punkt. Standardmäßig ein schwarzer Kreis ('ko').
+		Gibt das erzeugte Line2D-Objekt zurück.
+		"""
+		if len(args) == 2:
+			# Hier das return nutzen, um das Matplotlib-Objekt durchzureichen
+			return self.ax.plot(*args, 'ko', **kwargs)
+		return self.ax.plot(*args, **kwargs)
+
 
 
 	##
@@ -350,7 +358,6 @@ class BmswGraphLib:
 			hargs['prop']['size'] = self.base_fontsize
 
 		self.ax.legend(*args, **hargs)
-		self.ax.legend(*args, **hargs)
 
 
 	##
@@ -524,11 +531,11 @@ b = BmswGraphLib()
 # Demo: draw a simple graph
 def demo():
 	b = BmswGraphLib()
-
-	b.bmsw_coordinate_system(-2.5, 2.5, -4, 3.5)
+	b.set_fontsize(15)
+	b.draw_system(-2.5, 2.5, -4, 3.5)
 	b.draw_function_into_system(lambda x: -0.3 * x**2 + 2*x + 1, (-2, 1.5), label="Parabel 2", color='#ff0000')
 	b.show()
-#	b.save_system("demo.png")# optional
+#	b.save_system("png") # optional
 
 
 ## start Main_ bmsw_graph_lib.py

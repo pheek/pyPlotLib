@@ -3,7 +3,7 @@
 from bmsw_graph_lib import b
 
 # A. System erstellen 
-b.bmsw_coordinate_system(-3, +4, -4, +2)
+b.draw_system(-3, +4, -4, +2)
 
 def parabelInScheitelform(x):
 	return -0.5*(x - 2)**2 + 1.5
@@ -23,7 +23,7 @@ b.draw_polygon(dreieck_punkte, color='#8e44ff', label="Fläche A")
 
 
 # D 3. Legende anzeigen
-b.legend(loc='upper left', bbox_to_anchor=(1, 1))
+b.legend(loc='upper left')
 
 # E anzeigen und (optional) speichern
 #b.save_system("png")

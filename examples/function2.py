@@ -6,7 +6,7 @@ from bmsw_graph_lib import b
 #b.set_fontsize(20)
 
 # A. System erstellen (z.B. -4 bis 4)
-b.bmsw_coordinate_system(-4, 4, -4, 5)
+b.draw_system(-4, 4, -4, 5)
 
 # B. Zeichnen
 

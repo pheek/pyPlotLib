@@ -6,7 +6,7 @@ from bmsw_graph_lib import b
 b.set_fontsize(14)
 
 # 1. System erstellen 
-b.bmsw_coordinate_system(0, 6, 0, 6)
+b.draw_system(0, 6, 0, 6)
 
 # 2. Daten definieren
 pos_x = [1, 2, 3, 4, 5]

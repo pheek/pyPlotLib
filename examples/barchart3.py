@@ -3,7 +3,7 @@
 from bmsw_graph_lib import b
 
 # 1. System erstellen 
-b.bmsw_coordinate_system(0, 7, 0, 9)
+b.draw_system(0, 7, 0, 9)
 
 # 2. Daten definierensave_system(fig, "barchart1.png")
 

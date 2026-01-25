@@ -3,7 +3,7 @@
 from bmsw_graph_lib import b
 
 # A. System erstellen 
-b.bmsw_coordinate_system(-1, +4, -1, +3)
+b.draw_system(-1, +4, -1, +3)
 
 def wurzelFunktion(x):
 	return 1.5 * b.sqrt(x)
@@ -25,7 +25,7 @@ for i, p in enumerate(dreieck_punkte):
     b.text(p[0] + 0.12, p[1] + 0.02, labels[i], fontweight='bold', ha='center')
 
 # E Legende anzeigen
-b.legend(loc='upper left', bbox_to_anchor=(1, 1))
+b.legend(loc='upper left')
 
 # F anzeigen und (optional) speichern
 #b.save_system("png")

@@ -3,7 +3,7 @@ from bmsw_graph_lib import b
 
 
 # A. System erstellen (z.B. -4 bis 4)
-b.bmsw_coordinate_system(-6, 12, -5, 6)
+b.draw_system(-6, 12, -5, 6)
 
 # B. Zeichnen
 # dots definieren (python array of dots)

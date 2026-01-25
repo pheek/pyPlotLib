@@ -6,7 +6,7 @@ from bmsw_graph_lib import b
 b.set_fontsize(20)
 
 # A. System erstellen (z.B. -4 bis 4)
-b.bmsw_coordinate_system(-1, 4, -4, 2)
+b.draw_system(-1, 4, -4, 2)
 
 # Funktion definieren
 def f(x):	return -0.5*(x-2)**2 + 1.5
