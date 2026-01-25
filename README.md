@@ -19,4 +19,4 @@
           
 Funktionen
 ==========
-![Beispile Funktion](https://github.com/pheek/pyPlotLib/examples/img/funktion.png)
+![Beispile Funktion](https://github.com/pheek/pyPlotLib/blob/main/examples/img/funktion.png)
