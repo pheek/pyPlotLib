@@ -3,13 +3,14 @@
 from bmsw_graph_lib import b
 
 # optional: Font-Size vergrößern
-b.set_fontsize(20)
+#b.set_fontsize(20)
 
 # A. System erstellen (z.B. -4 bis 4)
 b.draw_system(-1, 4, -4, 2)
 
 # Funktion definieren
-def f(x):	return -0.5*(x-2)**2 + 1.5
+def f(x):
+	return -0.5 * (x - 2)**2 + 1.5
 
 # 1. Eine Parabel in Scheitelform
 b.draw_function_into_system(f, (-1, 3.5), label="Parabel", color='#ccddee')
