@@ -5,7 +5,7 @@ from bmsw_graph_lib import b
 # optional: Font-Size vergrößern
 #b.set_fontsize(20)
 
-# A. System erstellen (z.B. -4 bis 4)
+# A. System erstellen (z. B. x von -1 bis 4 und y von -4 bis 2)
 b.draw_system(-1, 4, -4, 2)
 
 # Funktion definieren
@@ -19,7 +19,7 @@ b.draw_function_into_system(f, (-0.5, 3.5))
 #b.legend(loc='lower center')
 
 # anzeigen und (optional) speichern
-#b.save_system("png")
+b.save_system("png")
 #b.save_system("eps")
 #b.save_system("pdf")
 #b.save_sysetm("jpg")

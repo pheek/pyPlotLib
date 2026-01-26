@@ -21,13 +21,13 @@ b.draw_function_into_system(lambda x: b.log(x), (0.01, 3.5), label="Parabel rot"
 # Punkte und Texte
 
 # Einen Punkt manuell hinzufügen (Beispiel für spätere Erweiterungen)
-b.dot(2  , 3 ) # Ein blauer Puknt (default)
+b.dot (2, 3) # Ein blauer Punkt (default)
 b.text(2.2, 3.1, 'P = (2|3)', color='#ff0000')
 
 b.dot(-1, 3, 'xr') #rotes kreuz (r=rot, x=kreuz)
 
 # weitere Punkt
-b.dot(2  , -1  , marker='s'  , color='#883366') # s=square
+b.dot (2  , -1  , marker='s'  , color='#883366') # s=square
 b.text(2.2, -1.3, 'Q = (2|-1)', color='#883366')
 
 # Bezeihcenter Punkt
