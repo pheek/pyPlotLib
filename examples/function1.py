@@ -12,15 +12,11 @@ b.draw_system(-1, 4, -4, 2)
 def f(x):
 	return -0.5 * (x - 2)**2 + 1.5
 
-# 1. Eine Parabel in Scheitelform
-b.draw_function_into_system(f, (-1, 3.5), label="Parabel", color='#ccddee')
+# Eine Parabel in Scheitelform
+b.draw_function_into_system(f, (-0.5, 3.5))
 
-# 2. Scheitelpunkt und Text
-b.dot(2, 1.5, 'bo') # Ein blauer (b) Punkt (o) bei (2, 1.5)
-b.text(1.5, 1.7, 'S=(2.2|1.6)',color='#0000bb')
-
-# 3. Legende anzeigen
-b.legend(loc='lower center')
+# Legende anzeigen (optional)
+#b.legend(loc='lower center')
 
 # anzeigen und (optional) speichern
 #b.save_system("png")

@@ -2,29 +2,34 @@
 
 from bmsw_graph_lib import b
 
-# A. System erstellen 
+# System erstellen 
 b.draw_system(-1, +4, -1, +3)
 
+# Funktion definieren
 def wurzelFunktion(x):
 	return 1.5 * b.sqrt(x)
 
-# B 1. Eine Parabel in Scheitelform
-b.draw_function_into_system(wurzelFunktion, (0, 3.5), label="Parabel", color='#ccddee')
+# Funktion zeichnen mit label in LaTeX
+b.draw_function_into_system(wurzelFunktion, (0, 3.5), label=r'$1.5\sqrt{x}$', color='#ccddee')
 
-# B Polygon
+# Polygon
 #   Punkte definieren (z.B. ein Parallelogramm)
 xx = 2.75
 dreieck_punkte = [[0,0], [xx, 0], [xx, wurzelFunktion(xx)]]
 
-# C Zeichnen
-b.draw_polygon(dreieck_punkte, color='#8e44ff', label="Fläche A")
+# Polygon zeichnen
+flaechenfarbe = "#8e44ff"
+b.draw_polygon(dreieck_punkte, color=flaechenfarbe, label="Fläche A")
 
-# D Eckpunkte Beschriften
-labels = ["", "B", "C"]
+# Eckpunkte Beschriften
+labels = ["", "P", "Q"]
 for i, p in enumerate(dreieck_punkte):
     b.text(p[0] + 0.12, p[1] + 0.02, labels[i], fontweight='bold', ha='center')
 
-# E Legende anzeigen
+# Flärhe beschritfen
+b.text(1.75, 0.5, "A", color=flaechenfarbe)
+    
+# Legende anzeigen
 b.legend(loc='upper left')
 
 # F anzeigen und (optional) speichern

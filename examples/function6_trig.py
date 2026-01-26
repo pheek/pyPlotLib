@@ -21,7 +21,7 @@ b.draw_function_into_system(f, (-2.8, 6), label="Cosinus verschoben", color='#cc
 b.labeled_dot(3.14, -1.5, label=r'$x \mapsto \cos(x) - \frac{1}{2}$', color="#000066")
 
 # 3. Legende anzeigen
-b.legend(loc='upper right')
+b.legend(loc='upper center')
 
 # anzeigen und (optional) speichern
 #b.save_system("png")

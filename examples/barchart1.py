@@ -10,11 +10,12 @@ from bmsw_graph_lib import b
 b.draw_system(0, 6, 0, 5)
 
 # 2. Daten definieren
-monate_x = [1, 2, 3, 4, 5]
-werte_y  = [2, 4, 3, 5, 4]
+monate_x     = [1, 2, 3, 4, 5]
+verkaeufe_y  = [2, 4, 3, 5, 4]
 
 # 3. Säulen zeichnen
-b.draw_bar_chart(monate_x, werte_y, label="Verkäufe", color='#fabc22')
+b.draw_bar_chart(monate_x, verkaeufe_y, label="Verkäufe", color='#fabc22')
+
 
 b.legend()
 
@@ -23,5 +24,3 @@ b.legend()
 #b.save_system("eps")
 
 b.show()
-
-
