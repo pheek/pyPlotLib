@@ -1,5 +1,5 @@
 bmsw_graph_lib.py
-=================
+61;8000;1c=================
 
 (c) 01_01_2026 philipp.freimann@bms-w.ch                                      
     (with help of gemini.google.com)
@@ -42,7 +42,7 @@ b.show()
 
 Koordinatensysteme sind auch mit trigonometrischer x-Achse möglich:
 
-![Beispil Koordinatensystem](https://github.com/pheek/pyPlotLib/blob/main/examples/img/koordinatensystem1.png)
+![Beispil Koordinatensystem](https://github.com/pheek/pyPlotLib/blob/main/examples/img/koordinatensystem2.png)
 
 Dazu ist einfach der Parameter "trig=True" zu setzen:
 
