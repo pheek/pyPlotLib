@@ -68,7 +68,7 @@ class BmswGraphLib:
 	# show_y_axis sollte beim Boxplot auf False gesetzt werden.
 	#
 
-	def draw_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False, step_x=1.0, step_y=1.0):
+	def draw_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False, step_x=1.0, step_y=1.0, grid_x=None, grid_y=None):
 		"""
 		Factory-Methode: Erstellt das System basierend auf dem Modus (Standard oder Trig).
 		"""
@@ -78,7 +78,7 @@ class BmswGraphLib:
 		if trig:
 			impl = _BmswTrigImpl(self)
 		else:
-			impl = _BmswStandardImpl(self, step_x=step_x, step_y=step_y)
+			impl = _BmswStandardImpl(self, step_x=step_x, step_y=step_y, grid_x=grid_x, grid_y=grid_y)
 
 		impl.setup(x_min, x_max, y_min, y_max, show_y_axis)
 
@@ -434,31 +434,41 @@ class _BmswBaseImpl:
 class _BmswStandardImpl(_BmswBaseImpl):
 	def get_x_name(self): return "x"
 
-	def __init__(self, parent, step_x=1.0, step_y=1.0):
+	def __init__(self, parent, step_x=1.0, step_y=1.0, grid_x=None, grid_y=None):
 		super().__init__(parent)
 		self.step_x = step_x
 		self.step_y = step_y
+		# Intelligente Standardwerte für das Gitter, falls nichts angegeben wurde:
+		# Wenn Schrittweite 5 ist -> Gitterweite 1
+		# Wenn Schrittweite 10 ist -> Gitterweite 2 oder 5 (hier wählen wir 2 für mehr Details)
+		# Sonst einfach die Hälfte der Schrittweite
+		self.grid_x = grid_x if grid_x is not None else (1.0 if step_x == 5.0 else step_x * 0.5)
+		self.grid_y = grid_y if grid_y is not None else (1.0 if step_y == 5.0 else step_y * 0.5)
 
 	def draw_grid(self, x_min, x_max, y_min, y_max):
-		# Standard Gitter-Logik
-		width_x = x_max - x_min
-#		major, minor = (5, 1) if width_x > 20 else (1, 0.5)
-		minor_x = self.step_x / 2
-		minor_y = self.step_y / 2
-		
-		for x in np.arange(x_min, x_max + 0.01, minor_x):
+		# Hilfsfunktion zum Einrasten auf das nächste Vielfache
+		def get_clean_start(start, step):
+			return np.ceil(start / step) * step
+
+		# 1. Feines Gitter (Minor)
+		x_start_minor = get_clean_start(x_min, self.grid_x)
+		for x in np.arange(x_start_minor, x_max + 0.01, self.grid_x):
 			self.p.ax.plot([x, x], [y_min, y_max], color='#d0d0f0', lw=0.5, zorder=0)
-		for x in np.arange(x_min, x_max + 0.01, self.step_x):
-			self.p.ax.plot([x, x], [y_min, y_max], color='#9090c0', lw=0.8, zorder=0)
-		for y in np.arange(y_min, y_max + 0.01, minor_y):
+		
+		y_start_minor = get_clean_start(y_min, self.grid_y)
+		for y in np.arange(y_start_minor, y_max + 0.01, self.grid_y):
 			self.p.ax.plot([x_min, x_max], [y, y], color='#d0d0f0', lw=0.5, zorder=0)
-		for y in np.arange(y_min, y_max + 0.01, self.step_y):
+		
+		# 2. Hauptgitter (Major - korrespondierend zu den Zahlen)
+		x_start_major = get_clean_start(x_min, self.step_x)
+		for x in np.arange(x_start_major, x_max + 0.01, self.step_x):
+			self.p.ax.plot([x, x], [y_min, y_max], color='#9090c0', lw=0.8, zorder=0)
+			
+		y_start_major = get_clean_start(y_min, self.step_y)
+		for y in np.arange(y_start_major, y_max + 0.01, self.step_y):
 			self.p.ax.plot([x_min, x_max], [y, y], color='#9090c0', lw=0.8, zorder=0)
 
 	def setup_ticks(self, x_min, x_max, y_min, y_max, show_y_axis):
-		# X-Achse: Ticks setzen
-		#x_ticks = np.arange(x_min, x_max + 0.1, 1.0)
-		#self.p.ax.set_xticks(x_ticks)
 		from matplotlib.ticker import MultipleLocator
         
 		self.p.ax.xaxis.set_major_locator(MultipleLocator(self.step_x))
