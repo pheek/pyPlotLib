@@ -71,7 +71,6 @@ def f(x):
 
 # zeichnen im Definitionsbereich x von -0.5 bis 3.5:
 b.draw_function_into_system(f, (-0.5, 3.5))
-''
 
 # und anzeigen (optional, aber von Vorteil)
 b.show()
