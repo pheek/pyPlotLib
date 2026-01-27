@@ -68,7 +68,7 @@ class BmswGraphLib:
 	# show_y_axis sollte beim Boxplot auf False gesetzt werden.
 	#
 
-	def draw_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False):
+	def draw_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False, step_x=1.0, step_y=1.0):
 		"""
 		Factory-Methode: Erstellt das System basierend auf dem Modus (Standard oder Trig).
 		"""
@@ -78,7 +78,7 @@ class BmswGraphLib:
 		if trig:
 			impl = _BmswTrigImpl(self)
 		else:
-			impl = _BmswStandardImpl(self)
+			impl = _BmswStandardImpl(self, step_x=step_x, step_y=step_y)
 
 		impl.setup(x_min, x_max, y_min, y_max, show_y_axis)
 
@@ -391,6 +391,9 @@ class BmswGraphLib:
 # end class BmswGrapLib
 
 
+
+#############################################################################
+
 class _BmswBaseImpl:
 	""" Basis-Logik für das Schweizer Koordinatensystem. """
 	def __init__(self, parent):
@@ -426,27 +429,39 @@ class _BmswBaseImpl:
 			self.p.ax.text(0, y_max + puffer, 'y', fontsize=self.p.base_fontsize+2, fontweight='bold', va='center', transform=y_off)
 
 
+##############################################################################
+
 class _BmswStandardImpl(_BmswBaseImpl):
 	def get_x_name(self): return "x"
+
+	def __init__(self, parent, step_x=1.0, step_y=1.0):
+		super().__init__(parent)
+		self.step_x = step_x
+		self.step_y = step_y
 
 	def draw_grid(self, x_min, x_max, y_min, y_max):
 		# Standard Gitter-Logik
 		width_x = x_max - x_min
-		major, minor = (5, 1) if width_x > 20 else (1, 0.5)
-		for x in np.arange(x_min, x_max + 0.01, minor):
+#		major, minor = (5, 1) if width_x > 20 else (1, 0.5)
+		minor_x = self.step_x / 2
+		minor_y = self.step_y / 2
+		
+		for x in np.arange(x_min, x_max + 0.01, minor_x):
 			self.p.ax.plot([x, x], [y_min, y_max], color='#d0d0f0', lw=0.5, zorder=0)
-		for x in np.arange(x_min, x_max + 0.01, major):
+		for x in np.arange(x_min, x_max + 0.01, self.step_x):
 			self.p.ax.plot([x, x], [y_min, y_max], color='#9090c0', lw=0.8, zorder=0)
-		for y in np.arange(y_min, y_max + 0.01, minor):
+		for y in np.arange(y_min, y_max + 0.01, minor_y):
 			self.p.ax.plot([x_min, x_max], [y, y], color='#d0d0f0', lw=0.5, zorder=0)
-		for y in np.arange(y_min, y_max + 0.01, major):
+		for y in np.arange(y_min, y_max + 0.01, self.step_y):
 			self.p.ax.plot([x_min, x_max], [y, y], color='#9090c0', lw=0.8, zorder=0)
 
 	def setup_ticks(self, x_min, x_max, y_min, y_max, show_y_axis):
 		# X-Achse: Ticks setzen
-		x_ticks = np.arange(x_min, x_max + 0.1, 1.0)
-		self.p.ax.set_xticks(x_ticks)
-		
+		#x_ticks = np.arange(x_min, x_max + 0.1, 1.0)
+		#self.p.ax.set_xticks(x_ticks)
+		from matplotlib.ticker import MultipleLocator
+        
+		self.p.ax.xaxis.set_major_locator(MultipleLocator(self.step_x))
 		# Schriftgröße für X- und Y-Achse (Zahlen) anpassen
 		self.p.ax.tick_params(axis='both', which='major', labelsize=self.p.base_fontsize)
 
@@ -457,7 +472,8 @@ class _BmswStandardImpl(_BmswBaseImpl):
 		# Y-Achse
 		if show_y_axis:
 			y_ticks = np.arange(y_min, y_max + 0.1, 1.0)
-			self.p.ax.set_yticks(y_ticks)
+			#self.p.ax.set_yticks(y_ticks)
+			self.p.ax.yaxis.set_major_locator(MultipleLocator(self.step_y))
 			self.p.ax.yaxis.set_major_formatter(FuncFormatter(
 				lambda v, p: '' if np.isclose(v, 0) or v < y_min or v > y_max else f'{v:g}'
 			))
