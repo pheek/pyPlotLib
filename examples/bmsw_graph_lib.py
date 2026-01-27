@@ -1,1 +1,1 @@
-/home/phi/dev/python/graphiken/bmswGraphLib/bmsw_graph_lib.py
+../bmsw_graph_lib.py
