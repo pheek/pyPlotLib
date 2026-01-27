@@ -32,13 +32,13 @@ Einfaches Koordinatensystem von Koordinatensystem mit einf
 
 code:
 
-``
+```
 from bmsw_graph_lib import b
 
 b.draw_system(-4, 4, -3, 3) # show_y_axis=True = default
 
 b.show()
-``
+```
 
 Koordinatensysteme sind auch mit trigonometrischer x-Achse möglich:
 
@@ -46,13 +46,13 @@ Koordinatensysteme sind auch mit trigonometrischer x-Achse möglich:
 
 Dazu ist einfach der Parameter "trig=True" zu setzen:
 
-``
+```
 from bmsw_graph_lib import b
 
 b.draw_system(0, 6, -0.5, 2.5, trig=True) # show_y_axis=True = default
 
 b.show()
-``
+```
 
 
 Funktionen
@@ -61,7 +61,8 @@ Funktionen
 
 Eine einfache Funktion wird mit Funktionsterm und Definitionsbereich in ein Koordinatensystem eingezeichnet:
 
-''from bmsw_graph_lib import b
+```
+from bmsw_graph_lib import b
 b.draw_system(-1, 4, -4, 2)
 
 # Funktion y=-0.5(x-2)^2 + 1.5 definieren:
@@ -74,3 +75,4 @@ b.draw_function_into_system(f, (-0.5, 3.5))
 
 # und anzeigen (optional, aber von Vorteil)
 b.show()
+```
