@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# see https://github.com/pheek/pyPlotLib
+
 from bmsw_graph_lib import b
 
 # Daten definieren

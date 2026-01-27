@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# see https://github.com/pheek/pyPlotLib
+
 from bmsw_graph_lib import b
 
 # 1. System erstellen (z.B. von 0 bis 10 auf beiden Achsen)
