@@ -10,10 +10,12 @@ b.draw_function_into_system(lambda x: b.sqrt(x) - 1.5, (-1, 3.5), label="Wurzel"
 
 b.dot(0, -1.5)
 
+b.legend()
+
 # anzeigen und (optional) speichern
 #b.save_system("png")
 #b.save_system("eps")
-b.save_system("pdf")
+#b.save_system("pdf")
 #b.save_sysetm("jpg")
 # und anzeigen (optional, aber von Vorteil)
 b.show()
