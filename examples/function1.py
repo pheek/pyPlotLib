@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 # see https://github.com/pheek/pyPlotLib
 
-
 from bmsw_graph_lib import b
 
 # optional: Font-Size vergrößern
 #b.set_fontsize(20)
 
 # A. System erstellen (z. B. x von -1 bis 4 und y von -4 bis 2)
-b.draw_system(-1, 4, -4, 2)
+b.draw_system(-1, 4, -2, 2)
 
 # Funktion definieren (-0.5 (x-2)^2 + 1.5
 def f(x):
