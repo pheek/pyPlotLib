@@ -87,8 +87,8 @@ class BmswGraphLib:
 
 	##
 	# Schreibe einen Text
-	def text(self, x, y, label, color="#0044cc", fontweight='bold',ha='center'):
-		self.ax.text(x, y, label, color=color, fontsize=self.base_fontsize, fontweight=fontweight, ha=ha)
+	def text(self, x, y, label, color="#0044cc", fontweight='bold',ha='center', rotation=0):
+		self.ax.text(x, y, label, color=color, fontsize=self.base_fontsize, fontweight=fontweight, ha=ha, rotation=rotation)
 
 
 	##
