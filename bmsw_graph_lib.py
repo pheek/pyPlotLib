@@ -264,7 +264,7 @@ class BmswGraphLib:
 		                     # NEU: Die Ausreißer (flierprops) massiv vergrößern
 		                     flierprops=dict(marker='o', markerfacecolor='none', 
 		                                     markeredgecolor=color, markersize=12, 
-		                                     markeredgewidth=3),
+		                                     markeredgewidth=4),
 		                     zorder=4)
 
 		# Optionales Label
@@ -407,7 +407,7 @@ class _BmswBaseImpl:
 		self.p = parent
 
 	def setup(self, x_min, x_max, y_min, y_max, show_y_axis):
-		puffer = 0.5
+		puffer = 0.7
 		self.p.ax.set_xlim(x_min - puffer, x_max + puffer)
 		self.p.ax.set_ylim(y_min - puffer, y_max + puffer)
 		self.p.ax.spines['bottom'].set_position('zero')

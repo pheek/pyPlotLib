@@ -6,7 +6,6 @@
 
 from bmsw_graph_lib import b
 
-
 b.set_fontsize(16)
 
 # System erstellen (x-Achse für Noten oder Punkte, y-Achse als Stapelplatz)
