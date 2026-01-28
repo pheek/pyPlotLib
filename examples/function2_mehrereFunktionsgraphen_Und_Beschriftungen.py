@@ -18,7 +18,7 @@ b.draw_function_into_system(lambda x: 0.5 * x**2 - 2, (-3.5, 3.5), label="Parabe
 
 # Eine rote Parabel
 # optional "farbe)
-b.draw_function_into_system(lambda x: b.log(x), (0.01, 3.5), label="Parabel rot", color='#ff0000')
+b.draw_function_into_system(lambda x: b.log(x), (0.01, 3.5), label="log(): rot", color='#ff0000')
 
 # Punkte und Texte
 
