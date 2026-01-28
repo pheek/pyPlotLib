@@ -1,15 +1,16 @@
 #!/usr/bin/python3
 # see https://github.com/pheek/pyPlotLib
 
-
 from bmsw_graph_lib import b
 
 # System erstellen (z.B. -4 bis 4)
 b.draw_system(-1, 4, -3, 1)
 
-# Eine Parabel in Scheitelform
-b.draw_function_into_system(lambda x: b.sqrt(x) - 1.5, (-1, 3.5), label="Wurzel", color='#ccddee')
 
+# Eine Wurzel
+b.draw_function_into_system(lambda x: b.sqrt(x) - yyy, (0, 3.5), label="Wurzel", color='#ccddee')
+
+	
 b.dot(0, -1.5)
 
 b.legend()
