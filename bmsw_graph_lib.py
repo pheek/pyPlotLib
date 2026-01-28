@@ -239,37 +239,44 @@ class BmswGraphLib:
 	#
 	def draw_boxplot(self, data, y_position, height=1.45, label=None, color='#3498db', axis_label=None):
 		"""
-		Zeichnet einen horizontalen Boxplot in das System.
-		data: Liste oder Array mit numerischen Werten.
-		y_position: Die Höhe auf der y-Achse, auf welcher der Boxplot liegen soll.
-		height: Die vertikale Ausdehnung der Box.
+		Zeichnet einen horizontalen Boxplot mit massiv verstärkten Linien und Ausreißern.
 		"""
-		# Hintergrundfarbe
+		# Hintergrundfarbe mit Transparenz
 		fill_color = f"{color}4D" if color.startswith('#') else "#cccccccc"
-		# patch_artist=True erlaubt das Füllen der Box mit Farbe
-		# vert=False sorgt für die horizontale Ausrichtung
-		# positions=[y_position] setzt den Boxplot auf die gewünschte Höhe
+		
+		# Verstärkte Linienstärken (ca. 3x so breit wie vorher)
+		line_width_bold = 4.5  # Vorher ca. 1.5 bis 2.5
+		
 		bp = self.ax.boxplot(data,
 		                     vert=False,
-		                     positions=[y_position], widths=height,
-		                     patch_artist=True, manage_ticks=False,
-		                     boxprops=dict(facecolor=fill_color, color=color, linewidth=1.5),
-		                     medianprops=dict(color=color, linewidth=2.5), # Roter Median
-		                     whiskerprops=dict(color=color, linewidth=2.5),
-		                     capprops=dict(color=color, linewidth=1.5),
+		                     positions=[y_position], 
+		                     widths=height,
+		                     patch_artist=True, 
+		                     manage_ticks=False,
+		                     # Die Box selbst
+		                     boxprops=dict(facecolor=fill_color, color=color, linewidth=line_width_bold),
+		                     # Der Median (der dicke Strich in der Mitte)
+		                     medianprops=dict(color=color, linewidth=line_width_bold * 1.5),
+		                     # Die Whisker (Antennen)
+		                     whiskerprops=dict(color=color, linewidth=line_width_bold),
+		                     # Die Endstriche der Whisker
+		                     capprops=dict(color=color, linewidth=line_width_bold),
+		                     # NEU: Die Ausreißer (flierprops) massiv vergrößern
+		                     flierprops=dict(marker='o', markerfacecolor='none', 
+		                                     markeredgecolor=color, markersize=12, 
+		                                     markeredgewidth=3),
 		                     zorder=4)
 
-		# Optionales Label links neben den Boxplot setzen
+		# Optionales Label
 		if label:
-			self.ax.text(min(data) - 0.5, y_position, label, fontweight='bold', va='center', ha='right', fontsize=self.base_fontsize)
+			self.ax.text(min(data) - 0.5, y_position, label, fontweight='bold', 
+			             va='center', ha='right', fontsize=self.base_fontsize)
+		
 		# Achsen-Beschriftung
 		if axis_label:
-			# Wir platzieren den Text unter der X-Achse (y-Position leicht negativ)
-			# transform=self.ax.get_xaxis_transform() sorgt dafür, dass x in Daten-Koordinaten
-			# und y in Achsen-Koordinaten (0 bis 1) gemessen wird.
-			self.ax.set_xlabel(axis_label, fontweight='bold', fontsize=self.base_fontsize, labelpad=15)
+			self.ax.set_xlabel(axis_label, fontweight='bold', 
+			                   fontsize=self.base_fontsize, labelpad=15)
 		return bp
-
 
 	# Unahbhängig vom Koordinatensystem:
 	# mögliche modi: "none", "relativ", "absolute"
