@@ -7,7 +7,9 @@ from bmsw_graph_lib import b
 # 1. System erstellen 
 b.draw_system(0, 7, 0, 22, grid_x=1, step_x=1, grid_y=1, step_y=5)
 
-b.set_fontsize(20)
+# Wird set_fontsize vor "draw_system" aufgerufen, so
+# werden auch die Achsenbeschriftungen vergrößert
+b.set_fontsize(16)
 
 # 2. Daten definierensave_system(fig, "barchart1.png")
 
