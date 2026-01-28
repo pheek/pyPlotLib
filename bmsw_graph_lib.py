@@ -68,11 +68,11 @@ class BmswGraphLib:
 	# show_y_axis sollte beim Boxplot auf False gesetzt werden.
 	#
 
-	def draw_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False, step_x=1.0, step_y=1.0, grid_x=None, grid_y=None):
+	def draw_system(self, x_min, x_max, y_min, y_max, show_y_axis=True, trig=False, step_x=1.0, step_y=1.0, grid_x=None, grid_y=None, figsize=(10,8)):
 		"""
 		Factory-Methode: Erstellt das System basierend auf dem Modus (Standard oder Trig).
 		"""
-		self.fig, self.ax = plt.subplots(figsize=(10, 8))
+		self.fig, self.ax = plt.subplots(figsize=figsize)
 
 		# Entscheidung, welche Logik genutzt wird
 		if trig:

@@ -7,7 +7,7 @@
 from bmsw_graph_lib import b
 
 # System erstellen (x-Achse für Noten oder Punkte, y-Achse als Stapelplatz)
-b.draw_system(0, 20, 0, 6, show_y_axis=False, step_x=5)
+b.draw_system(0, 20, 0, 6, show_y_axis=False, step_x=5, figsize=(10,3))
 
 # Beispieldaten: Punkte in einer Prüfung
 daten_klasse_a = [3, 5, 6, 7, 8, 8, 9, 10, 12, 14]
