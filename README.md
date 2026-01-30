@@ -26,7 +26,7 @@ bmsw_graph_lib.py
 
 Koordinatensysteme
 ------------------
-Einfaches Koordinatensystem von Koordinatensystem mit einf
+Einfaches Koordinatensystem. (Drei Codezeilen)
 
 ![Beispil Koordinatensystem](https://github.com/pheek/pyPlotLib/blob/main/examples/img/koordinatensystem1.png)
 
