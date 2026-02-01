@@ -12,7 +12,7 @@ def wurzelFunktion(x):
 	return 1.5 * b.sqrt(x)
 
 # Funktion zeichnen mit label in LaTeX
-b.draw_function_into_system(wurzelFunktion, (0, 3.5), label=r'$1.5\sqrt{x}$', color='#ccddee')
+b.draw_function_into_system(wurzelFunktion, (0, 3.5), label=r'$1.5\sqrt{x}$')
 
 # Polygon
 #   Punkte definieren (z.B. ein Parallelogramm)
@@ -26,7 +26,7 @@ b.draw_polygon(dreieck_punkte, color=flaechenfarbe, label="Fläche A")
 # Eckpunkte Beschriften
 labels = ["", "P", "Q"]
 for i, p in enumerate(dreieck_punkte):
-    b.text(p[0] + 0.12, p[1] + 0.02, labels[i], fontweight='bold', ha='center')
+    b.text(p[0] + 0.12, p[1] + 0.1, labels[i], fontweight='bold', ha='center')
 
 # Flärhe beschritfen
 b.text(1.75, 0.5, "A", color=flaechenfarbe)

@@ -33,6 +33,11 @@ import sys
 from   pathlib               import Path
 
 ##
+# Globale BMS-W Farbe
+#
+BMSW_COLOR="#9C2F30"
+
+##
 # class BmsGraphLib
 # import and use as in the /examples/
 #
@@ -87,7 +92,7 @@ class BmswGraphLib:
 
 	##
 	# Schreibe einen Text
-	def text(self, x, y, label, color="#0044cc", fontweight='bold',ha='center', rotation=0):
+	def text(self, x, y, label, color=BMSW_COLOR, fontweight='bold',ha='center', rotation=0):
 		self.ax.text(x, y, label, color=color, fontsize=self.base_fontsize, fontweight=fontweight, ha=ha, rotation=rotation)
 
 
@@ -108,7 +113,7 @@ class BmswGraphLib:
 
 	##
 	# Beschrifteter Punkt
-	def labeled_dot(self, x, y, label, color='#ff0000', offset=(0.2, 0.1)):
+	def labeled_dot(self, x, y, label, color=BMSW_COLOR, offset=(0.2, 0.1)):
 		self.dot(x, y, 'o', color=color) # Punkt
 		self.text(x + offset[0], y + offset[1], label, color=color, ha='left')
 
@@ -121,7 +126,7 @@ class BmswGraphLib:
 	# x_range: Definitionsbereich
 	# label  : Beschriftung (optional)
 	# color  : Farbe (optional)
-	def draw_function_into_system(self, func, x_range, label=None, color=None):
+	def draw_function_into_system(self, func, x_range, label=None, color=BMSW_COLOR):
 		"""
 		Zeichnet eine mathematische Funktion in das System ein.
 		func: Eine Lambda-Funktion oder normale Funktion
@@ -143,7 +148,7 @@ class BmswGraphLib:
 
 	##
 	# Draw Polygon
-	def draw_polygon(self, points, color='#e74c3c', label=None):
+	def draw_polygon(self, points, color=BMSW_COLOR, label=None):
 		"""
 		Zeichnet ein geschlossenes, gefülltes Polygon.
 		points: Liste von Koordinaten-Paaren, z. B. [[x1, y1], [x2, y2], ...]
@@ -170,7 +175,7 @@ class BmswGraphLib:
 	# mit "set_custom_labels" können die Säulen einzeln beschriftet werden.
 	# siehe folder /examples/
 	#
-	def draw_bar_chart(self, x_values, y_values, label=None, color='#3498db', width=0.8):
+	def draw_bar_chart(self, x_values, y_values, label=None, color=BMSW_COLOR, width=0.8):
 		"""
 		Zeichnet ein Säulendiagramm in das bestehende System.
 		width=1.0 würde bedeuten, dass die Säulen einander berühren.
@@ -210,7 +215,7 @@ class BmswGraphLib:
 	##
 	# Ein Histogramm
 	#
-	def draw_histogram(self, data, bin_width, start_value, label=None, color='#2ecc71'):
+	def draw_histogram(self, data, bin_width, start_value, label=None, color=BMSW_COLOR):
 		"""
 		Zeichnet ein Histogramm mit fester Säulenbreite und definiertem Startwert.
 		data: Die Liste der Rohdaten (z. B. [1.2, 1.5, 2.3, 2.7, ...])
@@ -237,7 +242,7 @@ class BmswGraphLib:
 	##
 	# Boxplot
 	#
-	def draw_boxplot(self, data, y_position, height=1.45, label=None, color='#3498db', axis_label=None):
+	def draw_boxplot(self, data, y_position, height=1.45, label=None, color=BMSW_COLOR, axis_label=None):
 		"""
 		Zeichnet einen horizontalen Boxplot mit massiv verstärkten Linien und Ausreißern.
 		"""
@@ -374,7 +379,7 @@ class BmswGraphLib:
 	#  save_system(fig, "meinbild.svg") (oder .eps / .pdf)
 	# gespeichert werden.
 	# mit plt.show() wird es jeweils am Ende angezeigt.
-	def save_system(self, filename, dpi=300):
+	def save_system(self, filename, dpi=600):
 		"""
 		Speichert die Grafik in hoher Qualität.
 		.png -> Rastergrafik (gut für Word/Web)
@@ -566,7 +571,7 @@ def demo():
 	b = BmswGraphLib()
 	b.set_fontsize(15)
 	b.draw_system(-2.5, 2.5, -4, 3.5)
-	b.draw_function_into_system(lambda x: -0.3 * x**2 + 2*x + 1, (-2, 1.5), label="Parabel 2", color='#ff0000')
+	b.draw_function_into_system(lambda x: -0.3 * x**2 + 2*x + 1, (-2, 1.5), label="Parabel 2")
 	b.show()
 #	b.save_system("png") # optional
 

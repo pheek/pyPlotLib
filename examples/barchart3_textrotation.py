@@ -14,7 +14,7 @@ groessen = ["extra small", "small", "medium", "large", "extra large", "bombastic
 anzahl = [1, 3, 5, 4, 2, 8]
 
 # 3. Säulen zeichnen
-b.draw_bar_chart(pos_x, anzahl, color='#8e2288') # Ein schönes Violett
+b.draw_bar_chart(pos_x, anzahl)
 
 # 4. Namen statt Zahlen an die x-Achse schreiben
 b.set_custom_labels(pos_x, groessen)

@@ -8,8 +8,7 @@ b.draw_system(-1, 4, -3, 1)
 
 
 # Eine Wurzel
-b.draw_function_into_system(lambda x: b.sqrt(x) - yyy, (0, 3.5), label="Wurzel", color='#ccddee')
-
+b.draw_function_into_system(lambda x: b.sqrt(x) - 1.5, (0, 3.5), label="Wurzel")
 	
 b.dot(0, -1.5)
 

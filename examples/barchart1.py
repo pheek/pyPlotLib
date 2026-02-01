@@ -16,7 +16,7 @@ monate_x     = [1, 2, 3, 4, 5]
 verkaeufe_y  = [2, 4, 3, 5, 4]
 
 # 3. Säulen zeichnen
-b.draw_bar_chart(monate_x, verkaeufe_y, label="Verkäufe", color='#fabc22')
+b.draw_bar_chart(monate_x, verkaeufe_y, label="Verkäufe")
 
 
 b.legend()

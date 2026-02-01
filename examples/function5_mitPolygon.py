@@ -11,7 +11,7 @@ def parabelInScheitelform(x):
 	return -0.5*(x - 2)**2 + 1.5
 
 # B 1. Eine Parabel in Scheitelform
-b.draw_function_into_system(parabelInScheitelform, (-2, 3.5), label="Parabel", color='#ccddee')
+b.draw_function_into_system(parabelInScheitelform, (-2, 3.5), label="Parabel")
 
 # B 2. Scheitelpunkt
 b.dot(2  , 1.5  , 'bo') # Ein blauer (b) Punkt (o) bei (2, 1.5)

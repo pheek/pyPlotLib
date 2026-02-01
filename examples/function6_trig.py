@@ -15,12 +15,12 @@ def f(x):
 	return b.cos(x) - 0.5
 
 # 1. Eine Parabel in Scheitelform
-b.draw_function_into_system(f, (-2.8, 6), label="Cosinus verschoben", color='#ccddee')
+b.draw_function_into_system(f, (-2.8, 6), label="Cosinus verschoben")
 
 #b.set_trig_labels()# no longer needed
 
 # 2. Scheitelpunkt und Text
-b.labeled_dot(3.14, -1.5, label=r'$x \mapsto \cos(x) - \frac{1}{2}$', color="#000066")
+b.labeled_dot(3.14, -1.5, label=r'$x \mapsto \cos(x) - \frac{1}{2}$', color="#ff0000")
 
 # 3. Legende anzeigen
 b.legend(loc='upper center')
