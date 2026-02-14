@@ -568,14 +568,44 @@ b = BmswGraphLib()
 ##
 # Demo: draw a simple graph
 def demo():
-	b = BmswGraphLib()
+	# b = BmswGraphLib() # b already globally defined
 	b.set_fontsize(15)
+
+	## always start with a system (except draw_pie_chart())
 	b.draw_system(-2.5, 2.5, -4, 3.5)
+
+	## any function-graph
 	b.draw_function_into_system(lambda x: -0.3 * x**2 + 2*x + 1, (-2, 1.5), label="Parabel 2")
+
+	## a box-plot
+	boxplotdaten = [0.1, 0.2,0.2, 0.2,0.3,1.3,0.4,0.4,1.1, 0.9, 0.5, 0.5, 0.5, 0.6, 0.7, 0.9, 2.2]
+	b.draw_boxplot(boxplotdaten, -1.5, height=0.8)
+
+	bar_pos=[0.5, 1, 1.5, 2]
+	bar_val=[  6, 4,   1, 3]
+
+	# barchart
+	b.draw_bar_chart(bar_pos, bar_val, width=0.3)
+
+	#lables / texts
+	b.labeled_dot(-2, 2, r'$P=({-2}|2)$')
+
+	b.text(-2.5, 1, r'Werte $\longrightarrow$', color='#0000ff', rotation=90)
+
+	#polygon
+	dreieck_punkte = [[-2, 0], [-1, 0], [-2, 2]]
+
+	# C 2. Zeichnen
+	b.draw_polygon(dreieck_punkte, color='#8e44ff', label="Fläche A")
+
+	b.legend(loc="lower right")
+
 	b.show()
 #	b.save_system("png") # optional
 
 
+
+## #####################################
 ## start Main_ bmsw_graph_lib.py
 # shows a little demo
 if "__main__" == __name__:

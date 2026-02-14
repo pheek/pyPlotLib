@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # see https://github.com/pheek/pyPlotLib
 
-
 # Boxplot Beispiel
 from bmsw_graph_lib import b
 

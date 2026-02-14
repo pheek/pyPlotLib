@@ -14,11 +14,11 @@ b.draw_system(-4, 4, -4, 5)
 
 # Eine blaue Parabel zeichnen: f(x) = 0.5 * x^2 - 2
 # optional: "label"
-b.draw_function_into_system(lambda x: 0.5 * x**2 - 2, (-3.5, 3.5), label="Parabel blau")
+b.draw_function_into_system(lambda x: 0.5 * x**2 - 2, (-3.5, 3.5), label="Parabel")
 
 # Eine rote Parabel
 # optional "farbe)
-b.draw_function_into_system(lambda x: b.log(x), (0.01, 3.5), label="log(): rot", color='#ff0000')
+b.draw_function_into_system(lambda x: b.log(x), (0.01, 4), label="log(): rot", color='#ff0000')
 
 # Punkte und Texte
 
@@ -33,7 +33,7 @@ b.dot (2  , -1  , marker='s'  , color='#883366') # s=square
 b.text(2.2, -1.3, 'Q = (2|-1)', color='#883366')
 
 # Bezeihcenter Punkt
-b.labeled_dot(-3, 2, 'B', color="#cc6600")
+b.labeled_dot(-3, 2, 'B')
 
 # 3. Legende anzeigen
 #eg. b.legend(loc='center', bbox_to_anchor=(1, 1))

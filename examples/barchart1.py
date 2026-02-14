@@ -18,11 +18,11 @@ verkaeufe_y  = [2, 4, 3, 5, 4]
 # 3. Säulen zeichnen
 b.draw_bar_chart(monate_x, verkaeufe_y, label="Verkäufe")
 
-
 b.legend()
 
 # anzeigen und (optional) speichen
 #b.save_system("png")
 #b.save_system("eps")
+#b.save_sysetm("pdf")
 
 b.show()
