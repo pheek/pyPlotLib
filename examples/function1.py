@@ -22,7 +22,7 @@ b.draw_function_into_system(f, (-0.5, 3.5))
 # anzeigen und (optional) speichern
 #b.save_system("png")
 #b.save_system("eps")
-b.save_system("pdf")
+#b.save_system("pdf")
 #b.save_sysetm("jpg")
 #b.save_sysetm("svg")
 # und anzeigen (optional, aber von Vorteil)
