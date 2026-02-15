@@ -4,6 +4,8 @@
 
 from bmsw_graph_lib import b
 
+b.set_fontsize(20)
+
 # 1. System erstellen 
 b.draw_system(0, 7, 0, 9)
 
@@ -14,7 +16,7 @@ groessen = ["extra small", "small", "medium", "large", "extra large", "bombastic
 anzahl = [1, 3, 5, 4, 2, 8]
 
 # 3. Säulen zeichnen
-b.draw_bar_chart(pos_x, anzahl)
+b.draw_bar_chart(pos_x, anzahl, number_shift=-0.6)
 
 # 4. Namen statt Zahlen an die x-Achse schreiben
 b.set_custom_labels(pos_x, groessen)
@@ -26,5 +28,7 @@ b.ax.set_xticklabels(groessen, fontweight='bold', rotation=60, ha='right')
 b.legend(["Verkäufe Autos"], loc='upper center')
 
 ## save (optional) and show
+#b.save_system("eps")
+#b.save_system("pdf")
 #b.save_system("png")
 b.show()
