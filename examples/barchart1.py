@@ -16,7 +16,8 @@ monate_x     = [1, 2, 3, 4, 5]
 verkaeufe_y  = [2, 4, 3, 5, 4]
 
 # 3. Säulen zeichnen
-b.draw_bar_chart(monate_x, verkaeufe_y, label="Verkäufe")
+# number_shift (default = 0.5) bedeutet: Wie hoch über der Säule soll die Zahl beschriftet werden
+b.draw_bar_chart(monate_x, verkaeufe_y, label="Verkäufe", number_shift=0.2)
 
 b.legend()
 

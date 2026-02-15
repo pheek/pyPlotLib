@@ -175,7 +175,7 @@ class BmswGraphLib:
 	# mit "set_custom_labels" können die Säulen einzeln beschriftet werden.
 	# siehe folder /examples/
 	#
-	def draw_bar_chart(self, x_values, y_values, label=None, color=BMSW_COLOR, width=0.8):
+	def draw_bar_chart(self, x_values, y_values, label=None, color=BMSW_COLOR, width=0.8, withNumbers=True, number_shift=0.5):
 		"""
 		Zeichnet ein Säulendiagramm in das bestehende System.
 		width=1.0 würde bedeuten, dass die Säulen einander berühren.
@@ -189,6 +189,9 @@ class BmswGraphLib:
 		                   edgecolor='black',
 		                   linewidth=1,
 		                   zorder=3)
+		if withNumbers:
+			for i, value in enumerate(y_values):
+				self.ax.text(x_values[i], value + number_shift, str(value), ha='center', va='bottom', fontsize=self.base_fontsize)
 		return bars
 
 
